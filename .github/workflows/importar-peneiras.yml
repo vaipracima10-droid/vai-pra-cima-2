@@ -1,0 +1,19 @@
+name: Importar peneiras encontradas
+
+# Roda quando a busca semanal atualiza dados/peneiras-encontradas.json, ou à mão em Actions.
+on:
+  push:
+    branches: [main]
+    paths: [dados/peneiras-encontradas.json]
+  workflow_dispatch:
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enviar peneiras novas (ocultas) para o Supabase
+        env:
+          SUPABASE_URL: https://xnjfotolajdhpwsmqewi.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 scripts/importar_peneiras.py dados/peneiras-encontradas.json

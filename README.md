@@ -40,6 +40,17 @@ O envio de e-mails do Supabase no plano grátis tem limite baixo por hora. Para 
 
 Para trocar o administrador, mude o e-mail na função `is_admin()` de `supabase/schema.sql` (rode só ela de novo no SQL Editor) e em `ADMIN_EMAIL`, em `fonte/Main.dc.html`.
 
+## Busca automática de peneiras reais
+
+Uma tarefa agendada do Claude roda toda segunda de manhã: procura peneiras reais no estado de SP, confere cada uma na fonte e atualiza `dados/peneiras-encontradas.json` (as regras estão em `dados/COMO-BUSCAR.md`). Quando esse arquivo muda no `main`, o GitHub Actions (`.github/workflows/importar-peneiras.yml`) roda `scripts/importar_peneiras.py`, que envia ao banco só as peneiras novas, como "Peneira real" e **ocultas**. Para publicar, abra o painel do administrador, filtro **Ocultas**, confira a peneira, ligue **Visível no app** e salve.
+
+Para funcionar, o GitHub precisa da chave secreta do Supabase:
+
+1. No Supabase, em **Project Settings › API Keys**, copie uma **Secret key** (`sb_secret_...`; crie uma se não houver). Em projetos antigos, é a **service_role**, na aba de chaves antigas.
+2. No GitHub, em **Settings › Secrets and variables › Actions › New repository secret**, crie o segredo `SUPABASE_SERVICE_KEY` com essa chave.
+
+Essa chave passa por cima das regras do banco: ela só pode ficar nesse segredo do GitHub, nunca no app, no código ou numa conversa.
+
 ## Gerar o app
 
 ```
@@ -56,3 +67,6 @@ python3 fonte/build.py fonte/Main.dc.html fonte/vendor/react-19.2.8.js vai_pra_c
 | `fonte/build.py` | Gera o HTML do app a partir da fonte. |
 | `fonte/vendor/` | React 19.2.8 e supabase-js 2.117.3 (MIT), embutidos no app pelo `build.py`. |
 | `supabase/schema.sql` | Tabelas, regras de acesso e peneiras iniciais do banco. |
+| `dados/peneiras-encontradas.json` | Peneiras reais achadas pela busca semanal (entram ocultas no banco). |
+| `dados/COMO-BUSCAR.md` | Regras da busca semanal e formato de cada peneira. |
+| `scripts/importar_peneiras.py` | Envia as peneiras novas do arquivo acima para o Supabase. |

@@ -932,7 +932,8 @@ class Component extends DCLogic {
     if (amin != null && !(int(amin) && int(amax) && amin >= 1990 && amax <= Y && amin <= amax)) return err('Anos de nascimento inválidos.');
     if (e.prazo && !/^\d{4}-\d{2}-\d{2}$/.test(e.prazo)) return err('Data de inscrição inválida.');
     if (e.src.trim() && !/^https:\/\//i.test(e.src.trim())) return err('O link precisa começar com https://');
-    const c = cityOf(e.city), keep = e.city0 === e.city && e.lat != null;
+    // Cidade fora da lista (ex.: peneira importada) fica como está enquanto não for trocada.
+    const keep = e.city0 === e.city && e.lat != null, c = keep ? { n: e.city } : cityOf(e.city);
     const row = {
       origem_real: e.real, clube: e.club.trim(), divisao: e.divisao.trim(), cidade: c.n, endereco: e.addr.trim() || null,
       lat: keep ? e.lat : c.la + (Math.random() - 0.5) * 0.04, lon: keep ? e.lon : c.lo + (Math.random() - 0.5) * 0.04,
@@ -1250,7 +1251,7 @@ class Component extends DCLogic {
         v: e, set, title: s.edId == null ? 'Nova peneira' : 'Editar peneira', err: s.edErr, busy: s.edBusy,
         saveTx: s.edBusy ? 'Salvando…' : s.edId == null ? 'Adicionar' : 'Salvar', save: () => this.saveEd(),
         orig: [[false, 'Exemplo'], [true, 'Peneira real']].map(([v, l]) => ({ l, on: e.real === v, cls: segc(e.real === v), pick: () => setE({ real: v }) })),
-        cities: CITIES.map((c) => ({ l: c.n, on: e.city === c.n, cls: chip(e.city === c.n), pick: () => setE({ city: c.n }) })),
+        cities: CITIES.map((c) => c.n).concat(e.city0 && !CITIES.some((c) => c.n === e.city0) ? [e.city0] : []).map((n) => ({ l: n, on: e.city === n, cls: chip(e.city === n), pick: () => setE({ city: n }) })),
         gens: [['M', 'Masculino'], ['F', 'Feminino']].map(([k, l]) => ({ l, on: e.gen.includes(k), cls: chip(e.gen.includes(k)), pick: () => tog('gen', k) })),
         mods: ['Futebol', 'Futsal'].map((k) => ({ l: k, on: e.mod.includes(k), cls: chip(e.mod.includes(k)), pick: () => tog('mod', k) })),
         catTx: cmin >= 9 && cmax <= 20 && cmin <= cmax ? 'Nascidos em ' + (Y - cmax) + (cmin !== cmax ? '–' + (Y - cmin) : '') + ' (calculado pelo ano atual).' : 'Use números de 9 a 20.',
