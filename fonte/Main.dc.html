@@ -737,8 +737,8 @@ const ME0 = { ano: Y - 13, gen: 'M', mod: 'Futebol', city: '', gps: false, la: n
 
 // Banco de dados (Supabase). Preencha com a "Project URL" e a chave "anon public" do projeto
 // (Supabase › Project Settings › API). Vazio = modo demonstração: tudo fica só no aparelho.
-const SUPABASE_URL = '';
-const SUPABASE_ANON_KEY = '';
+const SUPABASE_URL = 'https://xnjfotolajdhpwsmqewi.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_ZWLyGuGL6LQDgq1gRe8Exw_56MBXQNt';
 // Única conta com acesso ao painel do administrador. Quem garante isso de verdade é o banco (supabase/schema.sql).
 const ADMIN_EMAIL = 'vaipracima10@gmail.com';
 const sb = SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
