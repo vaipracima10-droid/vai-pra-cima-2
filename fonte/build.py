@@ -3,6 +3,8 @@
 import re, sys, pathlib
 
 src, react, out = map(pathlib.Path, sys.argv[1:4])
+# Cliente do Supabase (login e banco). Opcional 4º argumento; padrão: a cópia em fonte/vendor.
+supa = pathlib.Path(sys.argv[4]) if len(sys.argv) > 4 else pathlib.Path(__file__).parent / 'vendor' / 'supabase-js-2.117.3.js'
 s = src.read_text()
 helm = s[s.index('<helmet>') + 8:s.index('</helmet>')]
 body = s[s.index('</helmet>') + 9:s.index('</x-dc>')]
@@ -121,6 +123,8 @@ html = f"""<!doctype html>
 <template id="tpl">{body}</template>
 <script>/* React 19 (MIT) */
 {react.read_text()}</script>
+<script>/* supabase-js 2.117.3 (MIT) */
+{supa.read_text()}</script>
 <script>{RUNTIME}</script>
 <script>
 {js}

@@ -171,6 +171,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 .sw.on{background:var(--ac);border-color:var(--ac)}
 .sw.on i{transform:translateX(20px);background:var(--acx)}
 .bottom{padding:12px 20px 24px;background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hint{font-size:12px;color:var(--mu);margin-top:6px}
+.irow{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--ln);font-size:14px}
 @media (prefers-reduced-motion:reduce){.app *,.app *::after{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition:none!important}}
 </style>
 </helmet>
@@ -214,8 +217,37 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 <span style="flex: 1"><span class="disp" style="display: block; font-size: 20px; font-weight: 800">Bora começar</span><span style="font-size: 13px; font-weight: 500">Para atletas e responsáveis</span></span>
 <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </button>
-<p class="mu" style="margin: 0; font-size: 12px; text-align: center">Peneiras marcadas como "Exemplo" são fictícias. As reais trazem a fonte. Tudo fica só no seu aparelho.</p>
+<p class="mu" style="margin: 0; font-size: 12px; text-align: center">Peneiras marcadas como "Exemplo" são fictícias. As reais trazem a fonte. {{s0Note}}</p>
 </div>
+</div>
+</div>
+</sc-if>
+
+<!-- sA · CONTA (e-mail e senha) -->
+<sc-if value="{{scr.sA}}" hint-placeholder-val="{{false}}">
+<div class="scr {{dir}}">
+<div class="top">
+<button type="button" class="ibtn" aria-label="Voltar" onClick="{{aBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<span class="eyebrow">Sua conta</span>
+</div>
+<div class="body pad" style="display: flex; flex-direction: column; gap: 18px; padding-bottom: 20px">
+<div class="in">
+<h1 class="disp h1">{{au.title}}</h1>
+<p class="mu" style="margin: 10px 0 0">{{au.sub}}</p>
+</div>
+<sc-if value="{{au.showEmail}}" hint-placeholder-val="{{true}}">
+<div class="field in" style="animation-delay: .05s"><label class="lbl" for="aem">E-mail</label><input id="aem" class="inp" type="email" inputmode="email" value="{{au.email}}" onChange="{{au.setEmail}}" placeholder="voce@email.com" autocomplete="email"></div>
+</sc-if>
+<sc-if value="{{au.showPass}}" hint-placeholder-val="{{true}}">
+<div class="field in" style="animation-delay: .1s"><label class="lbl" for="apw">{{au.passLbl}}</label><input id="apw" class="inp" type="password" value="{{au.pass}}" onChange="{{au.setPass}}" placeholder="Mínimo de 6 caracteres" autocomplete="{{au.passAc}}"></div>
+</sc-if>
+<sc-if value="{{au.forgot}}" hint-placeholder-val="{{true}}"><button type="button" class="lnk" style="align-self: flex-start" onClick="{{au.toForgot}}">Esqueci minha senha</button></sc-if>
+<sc-if value="{{au.msg}}" hint-placeholder-val="{{false}}"><div class="box ok fade"><span style="font-size: 14px">{{au.msg}}</span></div></sc-if>
+</div>
+<div class="bottom">
+<sc-if value="{{au.err}}" hint-placeholder-val="{{false}}"><p class="err fade" style="margin: 0 0 8px; text-align: center">{{au.err}}</p></sc-if>
+<button type="button" class="btn" onClick="{{au.submit}}" disabled="{{au.busy}}">{{au.cta}}</button>
+<sc-if value="{{au.alt}}" hint-placeholder-val="{{true}}"><p class="mu" style="margin: 12px 0 0; text-align: center; font-size: 14px">{{au.altTx}} <button type="button" class="lnk" onClick="{{au.toAlt}}">{{au.altCta}}</button></p></sc-if>
 </div>
 </div>
 </sc-if>
@@ -256,6 +288,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 </div>
 <sc-if value="{{me.gps}}" hint-placeholder-val="{{false}}"><p class="mu fade" style="margin: 10px 0 0; font-size: 13px">{{gpsTx}}</p></sc-if>
 </div>
+<sc-if value="{{acct.on}}" hint-placeholder-val="{{false}}">
+<div class="box soft in" style="flex-direction: row; align-items: center; gap: 10px; animation-delay: .25s">
+<span style="flex: 1; min-width: 0"><span class="lbl" style="margin: 0 0 2px">Conta</span><b style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{acct.email}}</b></span>
+<button type="button" class="btn ghost sm" style="width: auto" onClick="{{logout}}">Sair</button>
+</div>
+</sc-if>
 </div>
 <div class="bottom">
 <sc-if value="{{s1Err}}" hint-placeholder-val="{{false}}"><p class="err fade" style="margin: 0 0 8px; text-align: center">Escolha a cidade ou use o GPS.</p></sc-if>
@@ -274,6 +312,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 <div style="font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{prof1}}</div>
 <div class="mu" style="font-size: 13px; display: flex; align-items: center; gap: 6px">{{prof2}} · <button type="button" class="lnk" onClick="{{toS1}}">alterar</button></div>
 </div>
+<sc-if value="{{isAdmin}}" hint-placeholder-val="{{false}}"><button type="button" class="ibtn" aria-label="Painel do administrador" onClick="{{toAdmin}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg></button></sc-if>
 <button type="button" class="ibtn" aria-label="{{bellLabel}}" onClick="{{openNotes}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><sc-if value="{{unread}}" hint-placeholder-val="{{false}}"><span class="dot">{{unread}}</span></sc-if></button>
 </div>
 <h1 class="disp h1" style="font-size: 30px">{{pageTitle}}</h1>
@@ -423,6 +462,40 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 </div>
 </sc-if>
 
+<!-- s3 · ADMINISTRADOR -->
+<sc-if value="{{scr.s3}}" hint-placeholder-val="{{false}}">
+<div class="scr {{dir}}">
+<div class="top">
+<button type="button" class="ibtn" aria-label="Voltar" onClick="{{admBack}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<span class="eyebrow" style="flex: 1">Administrador</span>
+<button type="button" class="ibtn" aria-label="Atualizar" onClick="{{admReload}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg></button>
+</div>
+<div class="body pad" style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 32px">
+<h1 class="disp h1 in" style="font-size: 30px">Todas as peneiras</h1>
+<div class="in" style="display: flex; gap: 8px; animation-delay: .05s">
+<div class="stat"><b class="disp">{{adm.total}}</b><span class="mu" style="font-size: 13px">no banco</span></div>
+<div class="stat"><b class="disp">{{adm.ativas}}</b><span class="mu" style="font-size: 13px">no app agora</span></div>
+<div class="stat"><b class="disp">{{adm.ints}}</b><span class="mu" style="font-size: 13px">interesses</span></div>
+</div>
+<button type="button" class="btn in" style="animation-delay: .1s" onClick="{{admNew}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Adicionar peneira</button>
+<input class="inp" type="search" value="{{admQ}}" onChange="{{admSetQ}}" placeholder="Buscar por clube, cidade ou descrição" aria-label="Buscar peneiras">
+<div class="chips"><sc-for list="{{admFil}}" as="o" hint-placeholder-count="4"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div>
+<sc-for list="{{admList}}" as="p" hint-placeholder-count="4">
+<button type="button" class="row in" style="animation-delay: {{p.delay}}" onClick="{{p.edit}}">
+<span class="dt" style="width: 54px; padding: 6px 0"><span class="w">{{p.dow}}</span><span class="d disp" style="font-size: 20px">{{p.dd}}</span><span class="m">{{p.mon}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span class="disp" style="font-weight: 800; font-size: 16px">{{p.club}}</span>
+<span class="mu" style="font-size: 13px">{{p.div}} · {{p.city}} · {{p.time}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 5px"><span class="{{p.kindCls}}">{{p.kind}}</span><sc-for list="{{p.flags}}" as="w" hint-placeholder-count="0"><span class="tg warn">{{w.t}}</span></sc-for><span class="tg">{{p.nInt}}</span></span>
+</span>
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+</button>
+</sc-for>
+<sc-if value="{{admEmpty}}" hint-placeholder-val="{{false}}"><p class="mu" style="margin: 0">{{admEmptyTx}}</p></sc-if>
+</div>
+</div>
+</sc-if>
+
 <!-- FOLHA INFERIOR -->
 <sc-if value="{{sh.any}}" hint-placeholder-val="{{false}}">
 <div class="layer">
@@ -489,6 +562,76 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 </div>
 </sc-if>
 
+</div>
+</sc-if>
+
+<!-- editor da peneira (administrador) -->
+<sc-if value="{{sh.e}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 14px">
+<div><span class="eyebrow">Administrador</span><h2 class="disp h2" style="margin-top: 4px">{{ed.title}}</h2></div>
+<div><span class="lbl">Origem</span><div class="seg"><sc-for list="{{ed.orig}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div class="field"><label class="lbl" for="e-club">Clube</label><input id="e-club" class="inp" value="{{ed.v.club}}" onChange="{{ed.set.club}}" placeholder="Nome do clube"></div>
+<div class="field"><label class="lbl" for="e-div">Descrição</label><input id="e-div" class="inp" value="{{ed.v.divisao}}" onChange="{{ed.set.divisao}}" placeholder="Ex.: Base masculina, Futsal feminino"></div>
+<div><span class="lbl">Cidade</span><div class="chips"><sc-for list="{{ed.cities}}" as="c" hint-placeholder-count="8"><button type="button" class="{{c.cls}}" aria-pressed="{{c.on}}" onClick="{{c.pick}}">{{c.l}}</button></sc-for></div></div>
+<div class="field"><label class="lbl" for="e-addr">Endereço</label><input id="e-addr" class="inp" value="{{ed.v.addr}}" onChange="{{ed.set.addr}}" placeholder="Local, rua e número"></div>
+<div class="two">
+<div class="field"><label class="lbl" for="e-data">Data</label><input id="e-data" class="inp" type="date" value="{{ed.v.data}}" onChange="{{ed.set.data}}"></div>
+<div class="field"><label class="lbl" for="e-hora">Horário</label><input id="e-hora" class="inp" type="time" value="{{ed.v.hora}}" onChange="{{ed.set.hora}}"></div>
+</div>
+<div class="field"><label class="lbl" for="e-times">Horários por categoria (opcional)</label><input id="e-times" class="inp" value="{{ed.v.times}}" onChange="{{ed.set.times}}" placeholder="Sub-13: 12h; Sub-15 e Sub-17: 13h"></div>
+<div>
+<div class="two">
+<div class="field"><label class="lbl" for="e-cmin">Categoria: de Sub-</label><input id="e-cmin" class="inp" type="number" inputmode="numeric" min="9" max="20" value="{{ed.v.cmin}}" onChange="{{ed.set.cmin}}"></div>
+<div class="field"><label class="lbl" for="e-cmax">até Sub-</label><input id="e-cmax" class="inp" type="number" inputmode="numeric" min="9" max="20" value="{{ed.v.cmax}}" onChange="{{ed.set.cmax}}"></div>
+</div>
+<div class="hint">{{ed.catTx}}</div>
+</div>
+<div><span class="lbl">Gênero</span><div class="chips"><sc-for list="{{ed.gens}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Modalidade</span><div class="chips"><sc-for list="{{ed.mods}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div>
+<div class="two">
+<div class="field"><label class="lbl" for="e-preco">Preço (R$)</label><input id="e-preco" class="inp" inputmode="decimal" value="{{ed.v.preco}}" onChange="{{ed.set.preco}}" placeholder="Não informado"></div>
+<div class="field"><label class="lbl" for="e-tel">Telefone</label><input id="e-tel" class="inp" inputmode="tel" value="{{ed.v.tel}}" onChange="{{ed.set.tel}}" placeholder="(11) 90000-0000"></div>
+</div>
+<div class="hint">Preço 0 = grátis. Vazio = não informado.</div>
+</div>
+<div>
+<div class="two">
+<div class="field"><label class="lbl" for="e-vagas">Vagas abertas</label><input id="e-vagas" class="inp" type="number" inputmode="numeric" min="0" value="{{ed.v.vagas}}" onChange="{{ed.set.vagas}}" placeholder="Não informado"></div>
+<div class="field"><label class="lbl" for="e-total">Total de vagas</label><input id="e-total" class="inp" type="number" inputmode="numeric" min="0" value="{{ed.v.total}}" onChange="{{ed.set.total}}" placeholder="Não informado"></div>
+</div>
+<div class="hint">{{ed.vagasTx}}</div>
+</div>
+<div class="field"><label class="lbl" for="e-req">O que levar</label><input id="e-req" class="inp" value="{{ed.v.req}}" onChange="{{ed.set.req}}" placeholder="Chuteira, caneleira, água e documento"></div>
+<div class="field"><label class="lbl" for="e-prazo">Inscrições até (opcional)</label><input id="e-prazo" class="inp" type="date" value="{{ed.v.prazo}}" onChange="{{ed.set.prazo}}"></div>
+<div>
+<div class="two">
+<div class="field"><label class="lbl" for="e-amin">Nascidos de (opcional)</label><input id="e-amin" class="inp" type="number" inputmode="numeric" value="{{ed.v.amin}}" onChange="{{ed.set.amin}}" placeholder="Ano"></div>
+<div class="field"><label class="lbl" for="e-amax">até</label><input id="e-amax" class="inp" type="number" inputmode="numeric" value="{{ed.v.amax}}" onChange="{{ed.set.amax}}" placeholder="Ano"></div>
+</div>
+<div class="hint">Use quando o clube divulga anos de nascimento em vez de categoria.</div>
+</div>
+<div class="field"><label class="lbl" for="e-src">Link da fonte ou do formulário</label><input id="e-src" class="inp" type="url" inputmode="url" value="{{ed.v.src}}" onChange="{{ed.set.src}}" placeholder="https://"></div>
+<div class="field"><label class="lbl" for="e-srctx">Sobre a fonte</label><input id="e-srctx" class="inp" value="{{ed.v.srcTx}}" onChange="{{ed.set.srcTx}}" placeholder="Ex.: Divulgada pelo clube no Instagram em 18/09."></div>
+<button type="button" class="row" onClick="{{ed.tAtiva}}" aria-pressed="{{ed.v.ativa}}">
+<span style="flex: 1"><b style="display: block">Visível no app</b><span class="mu" style="font-size: 13px">Desligue para esconder a peneira sem apagar</span></span>
+<span class="sw {{ed.swCls}}"><i></i></span>
+</button>
+<sc-if value="{{ed.err}}" hint-placeholder-val="{{false}}"><p class="err fade" style="margin: 0">{{ed.err}}</p></sc-if>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px">
+<button type="button" class="btn ghost" onClick="{{closeSheet}}">Cancelar</button>
+<button type="button" class="btn" onClick="{{ed.save}}" disabled="{{ed.busy}}">{{ed.saveTx}}</button>
+</div>
+<sc-if value="{{ed.canDel}}" hint-placeholder-val="{{false}}"><button type="button" class="btn ghost sm" style="color: var(--hot)" onClick="{{ed.del}}" disabled="{{ed.busy}}">{{ed.delTx}}</button></sc-if>
+<sc-if value="{{ed.canDel}}" hint-placeholder-val="{{false}}">
+<div class="box soft">
+<b>{{ed.intsTitle}}</b>
+<sc-for list="{{ed.ints}}" as="i" hint-placeholder-count="2">
+<div class="irow"><span style="min-width: 0"><b style="display: block">{{i.nome}}</b><span class="mu" style="font-size: 12px">{{i.info}}</span></span><sc-if value="{{i.wa}}" hint-placeholder-val="{{true}}"><a class="lnk" style="font-size: 13px; white-space: nowrap" href="{{i.wa}}" target="_blank" rel="noopener">{{i.tel}}</a></sc-if></div>
+</sc-for>
+<sc-if value="{{ed.noInts}}" hint-placeholder-val="{{true}}"><span class="mu" style="font-size: 13px">Ninguém demonstrou interesse ainda.</span></sc-if>
+</div>
+</sc-if>
 </div>
 </sc-if>
 
@@ -592,6 +735,33 @@ const REAL = [
 const FD = { compat: true, vagas: false, fds: false, fav: false, dist: 0, cat: 0, mod: '', free: false, src: '' };
 const ME0 = { ano: Y - 13, gen: 'M', mod: 'Futebol', city: '', gps: false, la: null, lo: null, nome: '', tel: '' };
 
+// Banco de dados (Supabase). Preencha com a "Project URL" e a chave "anon public" do projeto
+// (Supabase › Project Settings › API). Vazio = modo demonstração: tudo fica só no aparelho.
+const SUPABASE_URL = '';
+const SUPABASE_ANON_KEY = '';
+// Única conta com acesso ao painel do administrador. Quem garante isso de verdade é o banco (supabase/schema.sql).
+const ADMIN_EMAIL = 'vaipracima10@gmail.com';
+const sb = SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const AU0 = { mode: 'entrar', email: '', pass: '', err: '', msg: '', busy: false };
+const isAdmin = (u) => !!u && (u.email || '').toLowerCase() === ADMIN_EMAIL && !!u.email_confirmed_at;
+const fromRow = (r) => ({
+  id: r.id, real: r.origem_real, club: r.clube, div: r.divisao, city: r.cidade, addr: r.endereco || '', lat: r.lat, lon: r.lon,
+  date: r.data, time: String(r.hora || '00:00').slice(0, 5), times: r.horarios || '', price: r.preco == null ? null : Number(r.preco),
+  vagas: r.vagas, total: r.total, cats: [r.cat_min, r.cat_max], anos: r.ano_min != null && r.ano_max != null ? [r.ano_min, r.ano_max] : null,
+  gen: r.generos, mod: r.modalidades, req: r.levar || '', deadline: r.prazo || null, src: r.fonte_url || '', srcTx: r.fonte_texto || '', tel: r.telefone || '', ativa: r.ativa
+});
+const intFromRow = (r) => ({ id: r.id, pid: r.peneira_id, sub: r.sub, gen: r.genero, ts: Date.parse(r.criado_em), mine: true, wait: r.lista_espera, real: r.origem_real, nome: r.nome || '', tel: r.whatsapp || '' });
+const authErr = (e) => {
+  const m = String((e && e.message) || '');
+  if (/invalid login/i.test(m)) return 'E-mail ou senha incorretos.';
+  if (/not confirmed/i.test(m)) return 'Confirme seu e-mail antes de entrar. O link está na sua caixa de entrada.';
+  if (/already registered|already exists/i.test(m)) return 'Esse e-mail já tem conta. Entre com sua senha.';
+  if (/rate limit|too many|security purposes/i.test(m)) return 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.';
+  if (/password/i.test(m)) return 'Senha fraca: use pelo menos 6 caracteres, misturando letras e números.';
+  if (/fetch|network/i.test(m)) return 'Sem conexão. Confira a internet e tente de novo.';
+  return 'Não foi possível concluir: ' + m;
+};
+
 function loadVpc() {
   try {
     const raw = localStorage.getItem('vpc1');
@@ -611,7 +781,10 @@ class Component extends DCLogic {
     this.state = {
       splash: !seen, scr: 's0', dir: '',
       me: { ...ME0, ...(L.me || {}) },
-      s1Err: false, fav: Array.isArray(L.fav) ? L.fav : [], ints: Array.isArray(L.int) ? L.int : [], taken: L.taken || {}, alerts: L.alerts !== false,
+      // Com banco, favoritas e histórico vêm da conta; sem banco, do aparelho.
+      s1Err: false, fav: !sb && Array.isArray(L.fav) ? L.fav : [], ints: !sb && Array.isArray(L.int) ? L.int : [], taken: L.taken || {}, alerts: L.alerts !== false,
+      user: null, auth: { ...AU0 }, pens: null, pensErr: false, ocup: {}, allInts: [], admQ: '', admFil: 'todas',
+      ed: null, edId: null, edErr: '', edBusy: false, edDel: false,
       notes: Array.isArray(L.notes) && L.notes.length ? L.notes : [
         { id: 1, t: 'Peneira real adicionada', x: 'Ferroviária faz seletiva feminina em Mauá no dia 14/11. Inscrições até 31/10.', ts: now - 3 * 36e5, rd: false },
         { id: 2, t: 'Últimas vagas', x: 'Osasco Juventude EC (exemplo) tem só 2 vagas no futsal.', ts: now - DAY, rd: false }
@@ -620,9 +793,175 @@ class Component extends DCLogic {
       sheet: null, closing: false, sp: null, step: 'info', draft: { nome: '', tel: '' }, err: '', doneWait: false, toast: ''
     };
   }
-  componentDidMount() { if (this.state.splash) this._sp = setTimeout(() => this.endSplash(), 1800); }
+  componentDidMount() {
+    if (this.state.splash) this._sp = setTimeout(() => this.endSplash(), 1800);
+    if (sb) {
+      // Não chamar o Supabase dentro do callback (pode travar a sessão): adia com setTimeout.
+      this._authSub = sb.auth.onAuthStateChange((ev, session) => setTimeout(() => {
+        if (ev === 'PASSWORD_RECOVERY') { clearTimeout(this._sp); this.setState({ splash: false, auth: { ...AU0, mode: 'nova' } }); this.go('sA'); }
+        this.setUser(session ? session.user : null);
+      }, 0));
+      this.loadPens();
+    }
+  }
   componentDidUpdate() { this.persist(); }
-  componentWillUnmount() { clearTimeout(this._sp); clearTimeout(this._tt); clearTimeout(this._sh); }
+  componentWillUnmount() { clearTimeout(this._sp); clearTimeout(this._tt); clearTimeout(this._sh); clearTimeout(this._pf); if (this._authSub) this._authSub.data.subscription.unsubscribe(); }
+
+  // ---- banco de dados ----
+  async loadPens() {
+    const [r, o] = await Promise.all([sb.from('peneiras').select('*').order('data'), sb.rpc('vagas_ocupadas')]);
+    if (r.error) { this.setState({ pensErr: true }); this.say('Sem conexão com o banco: mostrando as peneiras salvas no app'); return; }
+    const ocup = {}; (o.data || []).forEach((x) => { ocup[x.peneira_id] = x.ocupadas; });
+    this.setState({ pens: r.data.map(fromRow), pensErr: false, ocup });
+  }
+  setUser(u) {
+    const id = u ? u.id : null;
+    if (u) this.setState({ user: u });
+    if (this._uid === id) return this._mine;
+    const first = this._uid === undefined;
+    this._uid = id;
+    if (!u) {
+      this.setState({ user: null, ints: [], fav: [], allInts: [], me: { ...this.state.me, nome: '', tel: '' } });
+      this._mine = Promise.resolve();
+    } else {
+      this._mine = this.loadMine(u);
+    }
+    if (!first || u) this.loadPens(); // o administrador também enxerga as peneiras ocultas
+    return this._mine;
+  }
+  async loadMine(u) {
+    const [pf, it] = await Promise.all([
+      sb.from('perfis').select('*').eq('id', u.id).maybeSingle(),
+      sb.from('interesses').select('*').eq('user_id', u.id)
+    ]);
+    if (pf.error || it.error) { this.say('Não foi possível carregar sua conta. Confira a conexão.'); return; }
+    const ints = (it.data || []).map(intFromRow), r = pf.data;
+    if (r) {
+      const me = this.state.me;
+      this.setState({ ints, fav: r.favoritas || [], me: { ...me, ano: r.ano || me.ano, gen: r.genero || me.gen, mod: r.modalidade || me.mod, city: r.cidade || '', gps: !!r.usa_gps, nome: r.nome || '', tel: r.whatsapp || '' } });
+    } else {
+      this.setState({ ints });
+      this.saveProfile(); // primeira vez: cria o perfil com o que já foi respondido no aparelho
+    }
+    if (isAdmin(u)) this.loadAdm();
+  }
+  saveProfile() {
+    const u = this.state.user; if (!sb || !u) return;
+    clearTimeout(this._pf);
+    this._pf = setTimeout(async () => {
+      const me = this.state.me;
+      const { error } = await sb.from('perfis').upsert({ id: u.id, email: u.email, ano: me.ano, genero: me.gen, modalidade: me.mod, cidade: me.city || null, usa_gps: !!me.gps, nome: me.nome || null, whatsapp: me.tel || null, favoritas: this.state.fav });
+      if (error) this.say('Não foi possível salvar seu perfil na nuvem.');
+    }, 400);
+  }
+  needLogin() { this.setState({ auth: { ...AU0, mode: 'entrar', err: 'Entre na sua conta para continuar.' } }); this.go('sA'); }
+  afterLogin() { this.setState({ auth: { ...AU0 } }); this.go(this.state.me.city || this.state.me.gps ? 's2' : 's1'); }
+  async authSubmit() {
+    const a = this.state.auth, email = a.email.trim().toLowerCase();
+    const setA = (o) => this.setState({ auth: { ...this.state.auth, ...o } });
+    if (a.busy) return;
+    if (a.mode === 'confirmar') return setA({ mode: 'entrar', msg: '', err: '' });
+    if (a.mode !== 'nova' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setA({ err: 'Digite um e-mail válido.' });
+    if (a.mode !== 'esqueci' && a.pass.length < 6) return setA({ err: 'A senha precisa ter pelo menos 6 caracteres.' });
+    setA({ busy: true, err: '', msg: '' });
+    const back = location.origin + location.pathname;
+    try {
+      if (a.mode === 'entrar') {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password: a.pass });
+        if (error) return setA({ busy: false, err: authErr(error) });
+        await this.setUser(data.user);
+        this.afterLogin();
+      } else if (a.mode === 'criar') {
+        const { data, error } = await sb.auth.signUp({ email, password: a.pass, options: { emailRedirectTo: back } });
+        if (error) return setA({ busy: false, err: authErr(error) });
+        if (data.user && Array.isArray(data.user.identities) && !data.user.identities.length) return setA({ busy: false, err: 'Esse e-mail já tem conta. Entre com sua senha.' });
+        if (data.session) { await this.setUser(data.user); this.afterLogin(); }
+        else setA({ busy: false, mode: 'confirmar', pass: '', msg: 'Enviamos um link de confirmação para ' + email + '. Abra o e-mail, toque no link e depois entre com sua senha.' });
+      } else if (a.mode === 'esqueci') {
+        const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: back });
+        if (error) return setA({ busy: false, err: authErr(error) });
+        setA({ busy: false, msg: 'Se existir uma conta com esse e-mail, enviamos um link para criar uma nova senha.' });
+      } else if (a.mode === 'nova') {
+        const { error } = await sb.auth.updateUser({ password: a.pass });
+        if (error) return setA({ busy: false, err: authErr(error) });
+        this.say('Senha alterada');
+        this.afterLogin();
+      }
+    } catch (e) { setA({ busy: false, err: authErr(e) }); }
+  }
+  async logout() {
+    try { await sb.auth.signOut(); } catch (e) {}
+    this.setUser(null);
+    this.go('s0', true);
+    this.say('Você saiu da conta');
+  }
+
+  // ---- administrador ----
+  async loadAdm() {
+    const r = await sb.from('interesses').select('*').order('criado_em', { ascending: false });
+    if (r.error) return this.say('Não foi possível carregar os interesses.');
+    this.setState({ allInts: r.data });
+  }
+  edFrom(p) {
+    const s = (v) => (v == null ? '' : String(v));
+    if (!p) return { real: false, club: '', divisao: '', city: 'São Paulo', city0: null, lat: null, lon: null, addr: '', data: off(7), hora: '09:00', times: '', cmin: '11', cmax: '17', gen: ['M'], mod: ['Futebol'], preco: '0', tel: '', vagas: '', total: '', req: REQ, prazo: '', amin: '', amax: '', src: '', srcTx: '', ativa: true };
+    return { real: !!p.real, club: p.club, divisao: p.div, city: p.city, city0: p.city, lat: p.lat, lon: p.lon, addr: p.addr, data: p.date, hora: p.time, times: (p.times || '').replace(/\n/g, '; '),
+      cmin: s(p.cats[0]), cmax: s(p.cats[1]), gen: p.gen.slice(), mod: p.mod.slice(), preco: s(p.price), tel: p.tel || '', vagas: s(p.vagas), total: s(p.total), req: p.req || '',
+      prazo: p.deadline || '', amin: p.anos ? s(p.anos[0]) : '', amax: p.anos ? s(p.anos[1]) : '', src: p.src || '', srcTx: p.srcTx || '', ativa: p.ativa !== false };
+  }
+  openEd(p) { this.sheet('e', { ed: this.edFrom(p), edId: p ? p.id : null, edErr: '', edBusy: false, edDel: false }); }
+  async saveEd() {
+    const s = this.state, e = s.ed, isNew = s.edId == null;
+    const err = (t) => this.setState({ edErr: t });
+    const num = (v) => (String(v).trim() === '' ? null : Number(String(v).trim().replace(',', '.')));
+    const int = (v) => Number.isInteger(v);
+    if (s.edBusy) return;
+    if (e.club.trim().length < 2) return err('Digite o nome do clube.');
+    if (!e.divisao.trim()) return err('Digite uma descrição (ex.: Base masculina).');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.data)) return err('Escolha a data da peneira.');
+    if (!/^\d{2}:\d{2}/.test(e.hora)) return err('Escolha o horário.');
+    const cmin = num(e.cmin), cmax = num(e.cmax);
+    if (!int(cmin) || !int(cmax) || cmin < 9 || cmax > 20 || cmin > cmax) return err('Categoria: use números de 9 a 20, com "de" menor ou igual a "até".');
+    if (!e.gen.length) return err('Escolha pelo menos um gênero.');
+    if (!e.mod.length) return err('Escolha pelo menos uma modalidade.');
+    const preco = num(e.preco), vagas = num(e.vagas), total = num(e.total), amin = num(e.amin), amax = num(e.amax);
+    if (preco != null && !(preco >= 0)) return err('O preço precisa ser um número (0 = grátis).');
+    if ([vagas, total].some((x) => x != null && !(int(x) && x >= 0))) return err('Vagas e total precisam ser números inteiros.');
+    if (vagas != null && total != null && vagas > total) return err('As vagas abertas não podem passar do total.');
+    if ((amin == null) !== (amax == null)) return err('Preencha os dois anos de nascimento ou deixe os dois vazios.');
+    if (amin != null && !(int(amin) && int(amax) && amin >= 1990 && amax <= Y && amin <= amax)) return err('Anos de nascimento inválidos.');
+    if (e.prazo && !/^\d{4}-\d{2}-\d{2}$/.test(e.prazo)) return err('Data de inscrição inválida.');
+    if (e.src.trim() && !/^https:\/\//i.test(e.src.trim())) return err('O link precisa começar com https://');
+    const c = cityOf(e.city), keep = e.city0 === e.city && e.lat != null;
+    const row = {
+      origem_real: e.real, clube: e.club.trim(), divisao: e.divisao.trim(), cidade: c.n, endereco: e.addr.trim() || null,
+      lat: keep ? e.lat : c.la + (Math.random() - 0.5) * 0.04, lon: keep ? e.lon : c.lo + (Math.random() - 0.5) * 0.04,
+      data: e.data, hora: e.hora.slice(0, 5), horarios: e.times.trim() ? e.times.split(';').map((x) => x.trim()).filter(Boolean).join('\n') : null,
+      preco, vagas, total, cat_min: cmin, cat_max: cmax, ano_min: amin, ano_max: amax, generos: e.gen, modalidades: e.mod,
+      levar: e.req.trim() || null, prazo: e.prazo || null, fonte_url: e.src.trim() || null, fonte_texto: e.srcTx.trim() || null, telefone: e.tel.trim() || null, ativa: e.ativa
+    };
+    this.setState({ edBusy: true, edErr: '' });
+    const q = isNew ? sb.from('peneiras').insert(row) : sb.from('peneiras').update(row).eq('id', s.edId);
+    const { data, error } = await q.select().maybeSingle();
+    if (error || !data) return this.setState({ edBusy: false, edErr: error ? 'Não foi possível salvar: ' + error.message : 'O banco recusou a alteração. Confira se você entrou com a conta de administrador.' });
+    const p = fromRow(data);
+    this.setState({ pens: (this.state.pens || []).filter((x) => x.id !== p.id).concat(p), edBusy: false });
+    this.close();
+    this.say(isNew ? 'Peneira adicionada' : 'Alterações salvas');
+  }
+  async delEd() {
+    const s = this.state;
+    if (s.edBusy || s.edId == null) return;
+    if (!s.edDel) return this.setState({ edDel: true });
+    this.setState({ edBusy: true, edErr: '' });
+    const { data, error } = await sb.from('peneiras').delete().eq('id', s.edId).select();
+    if (error || !data || !data.length) return this.setState({ edBusy: false, edDel: false, edErr: error ? 'Não foi possível excluir: ' + error.message : 'O banco recusou a exclusão.' });
+    const id = s.edId;
+    this.setState({ pens: (this.state.pens || []).filter((x) => x.id !== id), allInts: this.state.allInts.filter((i) => i.peneira_id !== id), ints: this.state.ints.filter((i) => i.pid !== id), edBusy: false });
+    this.close();
+    this.say('Peneira excluída');
+  }
+
   persist() {
     const s = this.state;
     try { localStorage.setItem('vpc1', JSON.stringify({ role: 'a', me: s.me, fav: s.fav, int: s.ints, notes: s.notes.slice(0, 30), alerts: s.alerts, taken: s.taken })); } catch (e) {}
@@ -633,7 +972,7 @@ class Component extends DCLogic {
   sheet(kind, extra) { clearTimeout(this._sh); this.setState({ sheet: kind, closing: false, ...(extra || {}) }); }
   close() { if (!this.state.sheet || this.state.closing) return; this.setState({ closing: true }); this._sh = setTimeout(() => this.setState({ sheet: null, closing: false }), 220); }
   note(t, x) { this.setState({ notes: [{ id: Date.now(), t, x, ts: Date.now(), rd: false }].concat(this.state.notes) }); }
-  vag(p) { return p.vagas == null ? null : Math.max(0, p.vagas - (this.state.taken[p.id] || 0)); }
+  vag(p) { return p.vagas == null ? null : Math.max(0, p.vagas - ((sb ? this.state.ocup : this.state.taken)[p.id] || 0)); }
   here() { const me = this.state.me; return me.gps && me.la != null ? { la: me.la, lo: me.lo } : me.gps ? { la: -23.561, lo: -46.656 } : cityOf(me.city || 'São Paulo'); }
   why(p, sub) {
     const me = this.state.me, r = [];
@@ -668,31 +1007,55 @@ class Component extends DCLogic {
   tFav(id) {
     const fav = this.state.fav, on = fav.includes(id);
     this.setState({ fav: on ? fav.filter((x) => x !== id) : fav.concat(id) });
+    this.saveProfile();
     this.say(on ? 'Removida das favoritas' : 'Salva nas favoritas');
   }
   openP(id) { const me = this.state.me; this.sheet('p', { sp: id, step: 'info', err: '', draft: { nome: me.nome || '', tel: me.tel || '' } }); }
-  addInt(p, extra) {
+  async addInt(p, extra) {
     const s = this.state, wait = this.vag(p) === 0;
-    const it = { id: Date.now(), pid: p.id, sub: Y - s.me.ano, gen: s.me.gen, ts: Date.now(), mine: true, wait: !p.real && wait, real: !!p.real, ...(extra || {}) };
+    let it = { id: Date.now(), pid: p.id, sub: Y - s.me.ano, gen: s.me.gen, ts: Date.now(), mine: true, wait: !p.real && wait, real: !!p.real, ...(extra || {}) };
+    if (sb) {
+      const u = s.user; if (!u) { this.needLogin(); return null; }
+      if (this._sending) return null;
+      this._sending = true;
+      // Lista de espera e origem são decididas pelo banco (gatilho em supabase/schema.sql).
+      const { data, error } = await sb.from('interesses').insert({ user_id: u.id, peneira_id: p.id, nome: it.nome || null, whatsapp: it.tel || null, sub: it.sub, genero: it.gen }).select().single();
+      this._sending = false;
+      if (error) { this.say(/duplicate/i.test(error.message) ? 'Você já demonstrou interesse nesta peneira' : 'Não foi possível salvar. Confira a conexão e tente de novo.'); return null; }
+      it = intFromRow(data);
+      const ocup = { ...this.state.ocup }; if (!it.real && !it.wait) ocup[p.id] = (ocup[p.id] || 0) + 1;
+      this.setState({ ints: this.state.ints.concat(it), ocup });
+      if (isAdmin(u)) this.setState({ allInts: [data].concat(this.state.allInts) });
+      return it;
+    }
     const taken = { ...s.taken }; if (!p.real && !wait) taken[p.id] = (taken[p.id] || 0) + 1;
     this.setState({ ints: s.ints.concat(it), taken });
     return it;
   }
-  sendInt(p) {
+  async sendInt(p) {
     const s = this.state, dr = s.draft;
     if (dr.nome.trim().length < 2) return this.setState({ err: 'Digite o nome do atleta.' });
     const t = digits(dr.tel);
     if (t.length < 10) return this.setState({ err: 'Digite um WhatsApp com DDD.' });
-    const it = this.addInt(p, { nome: dr.nome.trim(), tel: mask(t) });
+    const it = await this.addInt(p, { nome: dr.nome.trim(), tel: mask(t) });
+    if (!it) return;
     this.setState({ me: { ...this.state.me, nome: it.nome, tel: it.tel }, step: 'done', doneWait: it.wait, err: '' });
+    this.saveProfile();
     this.note(it.wait ? 'Você está na lista de espera' : 'Interesse enviado', p.club + ' · ' + p.div + '. O clube vai entrar em contato pelo WhatsApp.');
   }
-  markReal(p) {
-    this.addInt(p);
+  async markReal(p) {
+    if (!(await this.addInt(p))) return;
     this.note('Inscrição registrada no histórico', p.club + ' · ' + p.div + '. Lembre de levar o que o clube pedir.');
     this.say('Salvo no seu histórico');
   }
-  cancelInt(it) {
+  async cancelInt(it) {
+    if (sb) {
+      const { error } = await sb.from('interesses').delete().eq('id', it.id);
+      if (error) return this.say('Não foi possível remover. Confira a conexão.');
+      const ocup = { ...this.state.ocup }; if (!it.real && !it.wait && ocup[it.pid]) ocup[it.pid] = ocup[it.pid] - 1;
+      this.setState({ ints: this.state.ints.filter((x) => x.id !== it.id), allInts: this.state.allInts.filter((x) => x.id !== it.id), ocup });
+      return this.say('Removido do histórico');
+    }
     const s = this.state, taken = { ...s.taken };
     if (!it.real && !it.wait && taken[it.pid]) taken[it.pid] = taken[it.pid] - 1;
     this.setState({ ints: s.ints.filter((x) => x.id !== it.id), taken });
@@ -715,9 +1078,11 @@ class Component extends DCLogic {
     const chip = (on) => 'chip' + (on ? ' on' : '');
     const segc = (on) => (on ? 'on' : '');
     const here = this.here();
-    const list = D.concat(REAL).map((p) => this.enrich(p, here, sub));
+    // Com banco: peneiras do Supabase (vazio enquanto carrega; as embutidas só se o banco falhar).
+    const loading = !!sb && !s.pens && !s.pensErr;
+    const list = (s.pens || (loading ? [] : D.concat(REAL))).map((p) => this.enrich(p, here, sub));
     const byId = {}; list.forEach((p) => { byId[p.id] = p; });
-    const shown = this.filt(list);
+    const shown = this.filt(list.filter((p) => p.ativa !== false));
     const fmtDl = (p) => { if (!p.deadline) return ''; const dl = pd(p.deadline); return (dl < T0 ? 'Inscrições encerradas em ' : 'Inscrições até ' + DOW[dl.getDay()].toLowerCase() + ', ') + pad(dl.getDate()) + '/' + pad(dl.getMonth() + 1); };
     const view = (p, i) => ({
       id: p.id, dow: DOW[p.d.getDay()], dd: pad(p.d.getDate()), mm: pad(p.d.getMonth() + 1), mon: MON[p.d.getMonth()],
@@ -833,7 +1198,7 @@ class Component extends DCLogic {
         canAct: !mine && !(P.real && closed), dis: !P.ok,
         cta: !P.ok ? 'Não combina com o seu perfil' : P.real ? 'Já me inscrevi: salvar no histórico' : P.v === 0 ? 'Entrar na lista de espera' : 'Tenho interesse',
         ctaCls: P.real ? 'btn ghost' : 'btn',
-        act: () => (P.real ? this.markReal(P) : this.setState({ step: 'contact', err: '' })),
+        act: () => (sb && !this.state.user ? this.needLogin() : P.real ? this.markReal(P) : this.setState({ step: 'contact', err: '' })),
         ctaTitle: P.v === 0 ? 'Lista de espera' : 'Tenho interesse', favTx: s.fav.includes(P.id) ? 'Salva' : 'Salvar',
         share: () => { const url = 'https://vaipracima.app/?p=' + P.id; let shared = false; try { if (navigator.share) { navigator.share({ title: P.club, text: 'Peneira ' + P.div + ' em ' + P.city, url }).catch(() => {}); shared = true; } else if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {}); } catch (e) {} if (!shared) this.say('Link copiado: vaipracima.app/?p=' + P.id); },
         ics: () => this.say('Evento pronto para a agenda: ' + v.dow + ' ' + v.dd + '/' + v.mm + ' às ' + v.time + ' (arquivo .ics na próxima versão)') };
@@ -846,10 +1211,73 @@ class Component extends DCLogic {
     };
     const toHist = () => { this.setState({ tab: 3, scr: 's2' }); this.close(); };
 
+    // conta
+    const a = s.auth, setA = (o) => this.setState({ auth: { ...this.state.auth, ...o } });
+    const au = {
+      title: { entrar: 'Entre na sua conta', criar: 'Crie sua conta', esqueci: 'Recuperar senha', nova: 'Crie uma nova senha', confirmar: 'Confirme seu e-mail' }[a.mode],
+      sub: { entrar: 'Use o e-mail e a senha do seu cadastro.', criar: 'Com a conta, seu perfil, suas favoritas e seu histórico ficam salvos em qualquer aparelho.', esqueci: 'Digite o e-mail da conta. Mandamos um link para você criar uma nova senha.', nova: 'Digite a nova senha da sua conta.', confirmar: '' }[a.mode],
+      showEmail: ['entrar', 'criar', 'esqueci'].includes(a.mode), showPass: ['entrar', 'criar', 'nova'].includes(a.mode),
+      passLbl: a.mode === 'nova' ? 'Nova senha' : 'Senha', passAc: a.mode === 'entrar' ? 'current-password' : 'new-password',
+      forgot: a.mode === 'entrar', msg: a.msg, err: a.err, busy: a.busy, email: a.email, pass: a.pass,
+      cta: a.busy ? 'Aguarde…' : { entrar: 'Entrar', criar: 'Criar conta', esqueci: 'Enviar link', nova: 'Salvar senha', confirmar: 'Já confirmei: entrar' }[a.mode],
+      alt: ['entrar', 'criar', 'esqueci'].includes(a.mode), altTx: a.mode === 'entrar' ? 'Ainda não tem conta?' : 'Já tem conta?', altCta: a.mode === 'entrar' ? 'Criar conta' : 'Entrar',
+      toAlt: () => setA({ mode: this.state.auth.mode === 'entrar' ? 'criar' : 'entrar', err: '', msg: '' }),
+      toForgot: () => setA({ mode: 'esqueci', err: '', msg: '' }),
+      setEmail: (e) => setA({ email: e.target.value, err: '' }), setPass: (e) => setA({ pass: e.target.value, err: '' }),
+      submit: () => this.authSubmit()
+    };
+    const admin = isAdmin(s.user);
+
+    // administrador
+    const intsBy = {}; s.allInts.forEach((i) => { (intsBy[i.peneira_id] = intsBy[i.peneira_id] || []).push(i); });
+    const q = s.admQ.trim().toLowerCase();
+    const admRaw = list
+      .filter((p) => !q || (p.club + ' ' + p.city + ' ' + p.div).toLowerCase().includes(q))
+      .filter((p) => ({ todas: true, proximas: p.days >= 0 && p.ativa !== false, passadas: p.days < 0, ocultas: p.ativa === false })[s.admFil])
+      .sort((x, y) => ((x.days < 0) - (y.days < 0)) || (x.days < 0 ? y.days - x.days : x.days - y.days));
+    const admList = admRaw.map((p, i) => {
+      const k = (intsBy[p.id] || []).length;
+      return { ...view(p, i), flags: (p.ativa === false ? [{ t: 'Oculta' }] : []).concat(p.days < 0 ? [{ t: 'Já aconteceu' }] : []), nInt: k + (k === 1 ? ' interessado' : ' interessados'), edit: () => this.openEd(p) };
+    });
+    const admFil = [['todas', 'Todas'], ['proximas', 'Próximas'], ['passadas', 'Já aconteceram'], ['ocultas', 'Ocultas']].map(([k, l]) => ({ l, on: s.admFil === k, cls: chip(s.admFil === k), pick: () => this.setState({ admFil: k }) }));
+    let ed = {};
+    if (s.sheet === 'e' && s.ed) {
+      const e = s.ed, setE = (o) => this.setState({ ed: { ...this.state.ed, ...o }, edErr: '', edDel: false });
+      const tog = (k, v) => { const arr = this.state.ed[k]; setE({ [k]: arr.includes(v) ? arr.filter((x) => x !== v) : arr.concat(v) }); };
+      const set = {}; ['club', 'divisao', 'addr', 'data', 'hora', 'times', 'cmin', 'cmax', 'preco', 'tel', 'vagas', 'total', 'req', 'prazo', 'amin', 'amax', 'src', 'srcTx'].forEach((k) => { set[k] = (ev) => setE({ [k]: ev.target.value }); });
+      const cmin = +e.cmin, cmax = +e.cmax, ints = s.edId == null ? [] : intsBy[s.edId] || [];
+      ed = {
+        v: e, set, title: s.edId == null ? 'Nova peneira' : 'Editar peneira', err: s.edErr, busy: s.edBusy,
+        saveTx: s.edBusy ? 'Salvando…' : s.edId == null ? 'Adicionar' : 'Salvar', save: () => this.saveEd(),
+        orig: [[false, 'Exemplo'], [true, 'Peneira real']].map(([v, l]) => ({ l, on: e.real === v, cls: segc(e.real === v), pick: () => setE({ real: v }) })),
+        cities: CITIES.map((c) => ({ l: c.n, on: e.city === c.n, cls: chip(e.city === c.n), pick: () => setE({ city: c.n }) })),
+        gens: [['M', 'Masculino'], ['F', 'Feminino']].map(([k, l]) => ({ l, on: e.gen.includes(k), cls: chip(e.gen.includes(k)), pick: () => tog('gen', k) })),
+        mods: ['Futebol', 'Futsal'].map((k) => ({ l: k, on: e.mod.includes(k), cls: chip(e.mod.includes(k)), pick: () => tog('mod', k) })),
+        catTx: cmin >= 9 && cmax <= 20 && cmin <= cmax ? 'Nascidos em ' + (Y - cmax) + (cmin !== cmax ? '–' + (Y - cmin) : '') + ' (calculado pelo ano atual).' : 'Use números de 9 a 20.',
+        vagasTx: 'Vagas abertas descontam automaticamente quem demonstrar interesse. Vazio = não informado.',
+        swCls: e.ativa ? 'on' : '', tAtiva: () => setE({ ativa: !this.state.ed.ativa }),
+        canDel: s.edId != null, delTx: s.edDel ? 'Toque de novo para excluir de vez' : 'Excluir peneira', del: () => this.delEd(),
+        intsTitle: 'Interessados (' + ints.length + ')', noInts: !ints.length,
+        ints: ints.map((i) => ({
+          nome: i.nome || 'Inscrição registrada (formulário do clube)',
+          info: 'Sub-' + i.sub + ' · ' + (i.genero === 'F' ? 'Feminino' : 'Masculino') + (i.lista_espera ? ' · lista de espera' : '') + ' · ' + fmtTs(Date.parse(i.criado_em)),
+          tel: i.whatsapp || '', wa: i.whatsapp ? 'https://wa.me/55' + digits(i.whatsapp) : ''
+        }))
+      };
+    }
+
     return {
       tema, acc, splash: s.splash, skipSplash: () => { clearTimeout(this._sp); this.endSplash(); },
-      scr: { s0: s.scr === 's0', s1: s.scr === 's1', s2: s.scr === 's2' }, dir: s.dir,
-      start: () => this.go(this.state.me.city || this.state.me.gps ? 's2' : 's1'),
+      scr: { s0: s.scr === 's0', sA: s.scr === 'sA', s1: s.scr === 's1', s2: s.scr === 's2', s3: s.scr === 's3' && admin }, dir: s.dir,
+      start: () => (sb && !this.state.user ? (this.setState({ auth: { ...AU0, mode: 'criar' } }), this.go('sA')) : this.go(this.state.me.city || this.state.me.gps ? 's2' : 's1')),
+      s0Note: sb ? 'Seus dados ficam na sua conta, protegidos por e-mail e senha.' : 'Tudo fica só no seu aparelho.',
+      au, aBack: () => (this.state.auth.mode === 'esqueci' ? setA({ mode: 'entrar', err: '', msg: '' }) : this.go(this.state.user ? 's2' : 's0', true)),
+      acct: { on: !!s.user, email: s.user ? s.user.email : '' }, logout: () => this.logout(),
+      isAdmin: admin, toAdmin: () => { this.go('s3'); this.loadAdm(); },
+      admBack: () => this.go('s2', true), admReload: () => { this.loadPens(); this.loadAdm(); this.say('Atualizado'); },
+      adm: { total: list.length, ativas: list.filter((p) => p.ativa !== false && p.days >= 0).length, ints: s.allInts.length },
+      admNew: () => this.openEd(null), admQ: s.admQ, admSetQ: (e) => this.setState({ admQ: e.target.value }), admFil, admList,
+      admEmpty: !admList.length, admEmptyTx: loading ? 'Carregando…' : 'Nenhuma peneira encontrada.', ed,
       toS1: () => this.go('s1', true),
       s1Back: () => this.go(this.state.me.city || this.state.me.gps ? 's2' : 's0', true),
       me, subTx: 'Sub-' + sub, subShort: 'S' + sub, prof1, prof2,
@@ -857,17 +1285,17 @@ class Component extends DCLogic {
       yrDown: () => setMe({ ano: Math.max(Y - 20, this.state.me.ano - 1) }), yrUp: () => setMe({ ano: Math.min(Y - 9, this.state.me.ano + 1) }),
       genOpts, modOpts, cityOpts, gpsCls: me.gps ? 'on' : '', useGps: () => this.useGps(),
       gpsTx: me.la != null ? 'Usando sua localização atual.' : 'Usando o centro de São Paulo. O GPS de verdade só funciona com o app aberto por um link HTTPS.',
-      s1Err: s.s1Err, saveMe: () => { if (!this.state.me.city && !this.state.me.gps) { this.setState({ s1Err: true }); return; } this.go('s2'); },
+      s1Err: s.s1Err, saveMe: () => { if (!this.state.me.city && !this.state.me.gps) { this.setState({ s1Err: true }); return; } this.saveProfile(); this.go('s2'); },
       pageTitle: s.tab === 3 ? 'Meu histórico' : 'Peneiras pra você', showFilters: s.tab !== 3,
       tabPos: 'p' + s.tab, tabs: { l: s.tab === 0, m: s.tab === 1, c: s.tab === 2, h: s.tab === 3 },
       tabList: ['Lista', 'Mapa', 'Agenda', 'Histórico'].map((l, i) => ({ l, n: i === 3 ? upcoming : 0, on: s.tab === i, cls: s.tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
       quick, fCount, fBtnCls: fCount ? 'on' : '', openFilters: () => this.sheet('f'),
-      countTx: n + (n === 1 ? ' peneira' : ' peneiras'), sortTx: s.sort === 'perto' ? 'Mais próximas' : 'Mais cedo',
+      countTx: loading ? 'Carregando peneiras…' : n + (n === 1 ? ' peneira' : ' peneiras'), sortTx: s.sort === 'perto' ? 'Mais próximas' : 'Mais cedo',
       toggleSort: () => this.setState({ sort: this.state.sort === 'perto' ? 'cedo' : 'perto' }),
       alertTx: s.alerts ? 'Alertas ligados' : 'Alertas desligados', alertColor: s.alerts ? 'var(--act)' : 'var(--mu)', toggleAlerts, alerts: s.alerts, swCls: s.alerts ? 'on' : '',
       unread, bellLabel: unread ? 'Notificações, ' + unread + ' novas' : 'Notificações',
       openNotes: () => { this.sheet('n'); setTimeout(() => this.setState({ notes: this.state.notes.map((x) => ({ ...x, rd: true })) }), 900); },
-      cards, empty: !n, clearAll: () => this.setState({ f: { ...FD, compat: false } }),
+      cards, empty: !n && !loading, clearAll: () => this.setState({ f: { ...FD, compat: false } }),
       spPts: SPPTS, pins, meX: ((PX(here.lo) / 560) * 100).toFixed(2) + '%', meY: ((PY(here.la) / 344) * 100).toFixed(2) + '%',
       mapHas: mapItemsRaw.length > 0, mapHint: !mapItemsRaw.length, mapItems: mapItemsRaw.map(view),
       mapTitle: mapItemsRaw.length + (mapItemsRaw.length === 1 ? ' peneira · ' : ' peneiras · ') + mapCities.join(', '), mapClose: () => this.setState({ mapSel: null }),
@@ -878,8 +1306,8 @@ class Component extends DCLogic {
       hist, histHas: hist.length > 0, histEmpty: !hist.length,
       histSum: hist.length + (hist.length === 1 ? ' peneira' : ' peneiras') + ' · ' + upcoming + (upcoming === 1 ? ' próxima' : ' próximas'),
       toList: () => this.setState({ tab: 0 }), toHist,
-      sh: { any: !!s.sheet, p: s.sheet === 'p' && !!P, f: s.sheet === 'f', n: s.sheet === 'n' },
-      shOut: s.closing ? 'out' : '', shLabel: { p: 'Ficha da peneira', f: 'Filtros', n: 'Notificações' }[s.sheet] || '', closeSheet: () => this.close(),
+      sh: { any: !!s.sheet, p: s.sheet === 'p' && !!P, f: s.sheet === 'f', n: s.sheet === 'n', e: s.sheet === 'e' && !!s.ed && admin },
+      shOut: s.closing ? 'out' : '', shLabel: { p: 'Ficha da peneira', f: 'Filtros', n: 'Notificações', e: 'Editar peneira' }[s.sheet] || '', closeSheet: () => this.close(),
       step: { info: s.step === 'info', contact: s.step === 'contact', done: s.step === 'done' }, pv, draft: s.draft, dSet, err: s.err, doneTitle, doneTx,
       toInfo: () => this.setState({ step: 'info', err: '' }), sendInt: () => P && this.sendInt(P),
       fSrc, fDist, fCat, fMod, fPrice, fSort, seeTx: 'Ver ' + n + (n === 1 ? ' peneira' : ' peneiras'),
