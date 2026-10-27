@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vai Pra Cima 1.0 beta</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+.app{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.4}
+.app *{box-sizing:border-box}
+.t-escuro{--bg:#0B0D10;--s1:#16191F;--s2:#20242B;--ln:#2C313A;--tx:#F4F6F8;--mu:#A3ABB6;--hot:#FF8A63;--ov:rgba(0,0,0,.62)}
+.t-claro,.t-sistema{--bg:#F2F3EE;--s1:#FFFFFF;--s2:#E6E8E1;--ln:#D4D7CD;--tx:#0E1012;--mu:#525A64;--hot:#B3340C;--ov:rgba(14,16,18,.42)}
+.a-lima{--ac:#C6FF34;--acx:#0B0D10;--act:#C6FF34}
+.a-ciano{--ac:#46E3FF;--acx:#0B0D10;--act:#46E3FF}
+.a-laranja{--ac:#FF9A2E;--acx:#0B0D10;--act:#FF9A2E}
+.t-claro.a-lima,.t-sistema.a-lima{--act:#3A6600}
+.t-claro.a-ciano,.t-sistema.a-ciano{--act:#00677D}
+.t-claro.a-laranja,.t-sistema.a-laranja{--act:#9A4600}
+@media (prefers-color-scheme:dark){
+.t-sistema{--bg:#0B0D10;--s1:#16191F;--s2:#20242B;--ln:#2C313A;--tx:#F4F6F8;--mu:#A3ABB6;--hot:#FF8A63;--ov:rgba(0,0,0,.62)}
+.t-sistema.a-lima,.t-sistema.a-ciano,.t-sistema.a-laranja{--act:var(--ac)}
+}
+.disp{font-family:'Bricolage Grotesque','Inter',system-ui,sans-serif;letter-spacing:-.02em}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.f{fill:currentColor}
+.ic.sm{width:16px;height:16px}
+.ic.lg{width:26px;height:26px}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;border:0;background:none;padding:0;transition:transform .14s ease,background-color .2s,color .2s,border-color .2s,opacity .2s}
+button:active{transform:scale(.96)}
+button:disabled{cursor:default;opacity:.5}
+button:disabled:active{transform:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--act);outline-offset:2px}
+@keyframes fwd{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes bk{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes shIn{from{transform:translateY(100%)}to{transform:none}}
+@keyframes shOut{to{transform:translateY(100%)}}
+@keyframes pop{0%{opacity:0;transform:scale(.5) rotate(-8deg)}65%{opacity:1;transform:scale(1.08) rotate(2deg)}100%{transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ping{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.6);opacity:0}}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-6px) rotate(var(--r))}}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;animation:fwd .34s cubic-bezier(.2,.8,.2,1) both}
+.scr.bk{animation-name:bk}
+.in{animation:up .4s cubic-bezier(.2,.8,.2,1) both}
+.fade{animation:fade .28s ease both}
+.body{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.pad{padding:0 20px}
+.top{display:flex;align-items:center;gap:10px;padding:16px 16px 8px;min-height:64px}
+.ibtn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--s2);position:relative;flex:none}
+.dot{position:absolute;top:6px;right:6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--hot);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid var(--s2)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.h1{font-size:34px;line-height:1.02;font-weight:800;margin:0}
+.h2{font-size:22px;line-height:1.1;font-weight:800;margin:0}
+.mu{color:var(--mu)}
+.act{color:var(--act)}
+.btn{height:56px;border-radius:18px;background:var(--ac);color:var(--acx);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:0 20px}
+.btn.ghost{background:var(--s2);color:var(--tx)}
+.btn.sm{height:46px;font-size:14px;border-radius:14px}
+.lnk{color:var(--act);font-weight:700;text-decoration:underline;text-underline-offset:3px;min-height:28px}
+.lbl{font-size:13px;font-weight:700;color:var(--mu);margin:0 0 8px;display:block}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;background:var(--s2);padding:5px;border-radius:16px}
+.seg button{height:46px;border-radius:12px;font-weight:700;color:var(--mu)}
+.seg button.on{background:var(--tx);color:var(--bg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chipx{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px}
+.chipx::-webkit-scrollbar{display:none}
+.chip{height:40px;padding:0 14px;border-radius:20px;border:1.5px solid var(--ln);background:transparent;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex:none}
+.chip.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.chip .n{background:var(--ac);color:var(--acx);border-radius:10px;min-width:20px;height:20px;font-size:12px;display:grid;place-items:center;padding:0 6px}
+.inp{width:100%;height:52px;border-radius:14px;border:1.5px solid var(--ln);background:var(--s1);color:var(--tx);font:inherit;font-size:16px;padding:0 14px;outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--act)}
+.field{display:flex;flex-direction:column}
+.err{color:var(--hot);font-size:13px;font-weight:600}
+.splash{position:absolute;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%}
+.logo{width:96px;height:96px;border-radius:30px;background:var(--ac);color:var(--acx);display:grid;place-items:center;animation:pop .7s cubic-bezier(.2,.8,.2,1) both}
+.logo .ic{width:52px;height:52px;stroke-width:3}
+.rise{animation:up .5s .25s cubic-bezier(.2,.8,.2,1) both}
+.rise2{animation:up .5s .4s cubic-bezier(.2,.8,.2,1) both}
+.ld{width:120px;height:4px;border-radius:2px;background:var(--s2);overflow:hidden;margin-top:12px}
+.ld i{display:block;height:100%;background:var(--ac);transform-origin:left;animation:grow 1.5s .2s ease both}
+.tilt{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:18px;font-weight:700;font-size:14px;animation:drift 4s ease-in-out infinite}
+.role{display:flex;align-items:center;gap:14px;padding:18px;border-radius:22px;background:var(--s1);border:1.5px solid var(--ln);text-align:left;width:100%}
+.role.main{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.role .rk{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:rgba(127,127,127,.16);flex:none}
+.role.main .rk{background:rgba(11,13,16,.12)}
+.yr{display:flex;align-items:center;gap:12px;background:var(--s1);border:1.5px solid var(--ln);border-radius:20px;padding:10px}
+.yr .ibtn{width:48px;height:48px;font-size:22px;font-weight:700}
+.tabs{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--s2);border-radius:16px;padding:4px}
+.tabs .ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / 4);border-radius:12px;background:var(--tx);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+.tabs .ind.p1{transform:translateX(100%)}
+.tabs .ind.p2{transform:translateX(200%)}
+.tabs .ind.p3{transform:translateX(300%)}
+.tn{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ac);color:var(--acx);font-size:11px;font-weight:800;display:inline-grid;place-items:center}
+.card.past{opacity:.6}
+.tabs button{position:relative;z-index:1;height:42px;font-weight:700;font-size:13px;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:6px}
+.tabs button.on{color:var(--bg)}
+.card{position:relative;border-radius:22px;background:var(--s1);border:1.5px solid var(--ln);animation:up .4s cubic-bezier(.2,.8,.2,1) both}
+.card.soon{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 10%,var(--s1))}
+.cm{display:flex;gap:14px;padding:14px 56px 14px 14px;text-align:left;width:100%;border-radius:22px}
+.dt{width:62px;flex:none;border-radius:16px;background:var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0}
+.soon .dt,.dt.hl{background:var(--ac);color:var(--acx)}
+.dt .w{font-size:11px;font-weight:800;letter-spacing:.06em}
+.dt .d{font-size:28px;line-height:1;font-weight:800}
+.dt .m{font-size:11px;font-weight:700;letter-spacing:.06em}
+.tg{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:12px;background:var(--s2);font-size:12px;font-weight:600}
+.tg.warn{background:transparent;border:1.5px solid var(--hot);color:var(--hot)}
+.tg.ok{background:var(--ac);color:var(--acx)}
+.bar{height:6px;border-radius:3px;background:var(--s2);overflow:hidden;flex:1}
+.bar i{display:block;height:100%;border-radius:3px;background:var(--tx);transform-origin:left;animation:grow .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.fav{position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:var(--mu)}
+.fav.on{color:var(--hot)}
+.map{position:relative;width:100%;aspect-ratio:560/344;border-radius:22px;background:var(--s1);border:1.5px solid var(--ln);overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.spp{fill:var(--s2);stroke:var(--ln);stroke-width:2}
+.pin{position:absolute;transform:translate(-50%,-50%);min-width:32px;height:32px;padding:0 8px;border-radius:16px;background:var(--tx);color:var(--bg);font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.25);animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+.pin.hot{background:var(--ac);color:var(--acx)}
+.pin.sel{outline:3px solid var(--act);outline-offset:2px}
+.me{position:absolute;width:14px;height:14px;border-radius:7px;background:#2F7BFF;border:2px solid #fff;transform:translate(-50%,-50%)}
+.me::after{content:'';position:absolute;inset:-2px;border-radius:50%;background:#2F7BFF;animation:ping 1.8s ease-out infinite}
+.mini{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.mini::-webkit-scrollbar{display:none}
+.mc{flex:none;width:236px;text-align:left;padding:12px;border-radius:18px;background:var(--s1);border:1.5px solid var(--ln)}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .wd{font-size:11px;font-weight:700;color:var(--mu);text-align:center;padding:4px 0}
+.cal .dy{height:44px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;font-size:14px;gap:3px}
+.cal .dy i{width:6px;height:6px;border-radius:3px;background:transparent}
+.cal .dy.has i{background:var(--act)}
+.cal .dy.today{box-shadow:inset 0 0 0 1.5px var(--ln)}
+.cal .dy.past{color:var(--mu);opacity:.55}
+.cal .dy.sel{background:var(--tx);color:var(--bg)}
+.cal .dy.sel i{background:var(--ac)}
+.row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:var(--s1);border:1.5px solid var(--ln);text-align:left;width:100%}
+.layer{position:absolute;inset:0;z-index:30}
+.ov{position:absolute;inset:0;width:100%;background:var(--ov);animation:fade .25s ease both;border-radius:0}
+.ov:active{transform:none}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:88%;display:flex;flex-direction:column;background:var(--bg);border-radius:28px 28px 0 0;animation:shIn .36s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+.out.ov{animation:fadeOut .2s ease both}
+.out.sheet{animation:shOut .22s ease-in both}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--ln);margin:10px auto 4px;flex:none}
+.sb{overflow-y:auto;padding:8px 20px 28px;scrollbar-width:none}
+.sb::-webkit-scrollbar{display:none}
+.info{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln)}
+.info .ic{color:var(--mu);margin-top:2px}
+.box{border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.box.ok{background:color-mix(in srgb,var(--ac) 16%,var(--s1));border:1.5px solid var(--ac)}
+.box.no{background:color-mix(in srgb,var(--hot) 10%,var(--s1));border:1.5px solid var(--hot)}
+.box.soft{background:var(--s1);border:1.5px solid var(--ln)}
+.acts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ab{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:16px;background:var(--s1);border:1.5px solid var(--ln);font-size:12px;font-weight:600;text-decoration:none;color:var(--tx)}
+.ab.on{color:var(--hot)}
+.big-ok{width:84px;height:84px;border-radius:28px;background:var(--ac);color:var(--acx);display:grid;place-items:center;animation:pop .6s cubic-bezier(.2,.8,.2,1) both}
+.big-ok .ic{width:44px;height:44px;stroke-width:3}
+.toast{position:absolute;left:16px;right:16px;bottom:24px;z-index:60;background:var(--tx);color:var(--bg);border-radius:16px;padding:14px 16px;font-weight:600;font-size:14px;animation:up .3s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:14px;font-size:12px;font-weight:700}
+.pill.ok{background:var(--ac);color:var(--acx)}
+.pill.wait{background:var(--s2);color:var(--mu)}
+.pill.off{border:1.5px solid var(--hot);color:var(--hot)}
+.stat{flex:1;border-radius:20px;background:var(--s1);border:1.5px solid var(--ln);padding:14px}
+.stat b{display:block;font-size:30px;line-height:1;font-weight:800}
+.sw{width:52px;height:32px;border-radius:16px;background:var(--s2);position:relative;flex:none;border:1.5px solid var(--ln)}
+.sw i{position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:12px;background:var(--mu);transition:transform .25s cubic-bezier(.2,.8,.2,1),background-color .2s}
+.sw.on{background:var(--ac);border-color:var(--ac)}
+.sw.on i{transform:translateX(20px);background:var(--acx)}
+.bottom{padding:12px 20px 24px;background:linear-gradient(to top,var(--bg) 70%,transparent)}
+@media (prefers-reduced-motion:reduce){.app *,.app *::after{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition:none!important}}
+</style>
+</helmet>
+<div class="app t-{{tema}} a-{{acc}}" style="width: 390px; height: 844px; position: relative; overflow: hidden">
+
+<!-- ABERTURA -->
+<sc-if value="{{splash}}" hint-placeholder-val="{{false}}">
+<button type="button" class="splash" onClick="{{skipSplash}}" aria-label="Entrar no app">
+<div class="logo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M5 11.5L12 4.5l7 7"></path></svg></div>
+<div class="disp rise" style="font-size: 40px; font-weight: 800; line-height: 1">Vai Pra Cima</div>
+<div class="rise2 mu" style="font-size: 15px; font-weight: 500">A ponte entre você e o seu futuro</div>
+<div class="ld rise2"><i></i></div>
+</button>
+</sc-if>
+
+<!-- s0 · BOAS-VINDAS -->
+<sc-if value="{{scr.s0}}" hint-placeholder-val="{{true}}">
+<div class="scr {{dir}}">
+<div class="body pad" style="display: flex; flex-direction: column; gap: 22px; padding-top: 24px; padding-bottom: 28px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 36px; height: 36px; border-radius: 12px; background: var(--ac); color: var(--acx); display: grid; place-items: center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="M12 20V5M5 11.5L12 4.5l7 7"></path></svg></div>
+<span class="disp" style="font-weight: 800; font-size: 18px">Vai Pra Cima</span>
+</div>
+<span class="tg">1.0 beta</span>
+</div>
+<div class="in" style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 8px">
+<span class="tilt" style="--r: -4deg; background: var(--ac); color: var(--acx)">Sub-9 a Sub-20</span>
+<span class="tilt" style="--r: 3deg; background: var(--s2); animation-delay: .4s">Futebol</span>
+<span class="tilt" style="--r: -2deg; background: var(--tx); color: var(--bg); animation-delay: .8s">Futsal</span>
+<span class="tilt" style="--r: 4deg; border: 1.5px solid var(--ln); animation-delay: 1.2s">Masc · Fem</span>
+</div>
+<div class="in" style="animation-delay: .08s">
+<h1 class="disp h1" style="font-size: 46px">Sua próxima peneira está a um toque.</h1>
+<p class="mu" style="margin: 14px 0 0; font-size: 16px">Encontre testes em clubes e escolinhas de São Paulo, perto de você e da sua categoria.</p>
+</div>
+<div style="flex: 1"></div>
+<div class="in" style="display: flex; flex-direction: column; gap: 12px; animation-delay: .16s">
+<button type="button" class="role main" onClick="{{start}}">
+<span class="rk"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></span>
+<span style="flex: 1"><span class="disp" style="display: block; font-size: 20px; font-weight: 800">Bora começar</span><span style="font-size: 13px; font-weight: 500">Para atletas e responsáveis</span></span>
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</button>
+<p class="mu" style="margin: 0; font-size: 12px; text-align: center">Peneiras marcadas como "Exemplo" são fictícias. As reais trazem a fonte. Tudo fica só no seu aparelho.</p>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- s1 · CADASTRO DO ATLETA -->
+<sc-if value="{{scr.s1}}" hint-placeholder-val="{{false}}">
+<div class="scr {{dir}}">
+<div class="top">
+<button type="button" class="ibtn" aria-label="Voltar" onClick="{{s1Back}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<span class="eyebrow">Perfil do atleta</span>
+</div>
+<div class="body pad" style="display: flex; flex-direction: column; gap: 22px; padding-bottom: 20px">
+<div class="in">
+<h1 class="disp h1">Quem vai pra cima?</h1>
+<p class="mu" style="margin: 10px 0 0">4 respostas e pronto. Nome e WhatsApp só quando você tiver interesse numa peneira.</p>
+</div>
+<div class="in" style="animation-delay: .05s">
+<span class="lbl">Ano de nascimento</span>
+<div class="yr">
+<button type="button" class="ibtn" aria-label="Ano anterior" onClick="{{yrDown}}" disabled="{{yrMin}}">−</button>
+<div style="flex: 1; text-align: center"><div class="disp" style="font-size: 34px; font-weight: 800; line-height: 1">{{me.ano}}</div><div class="act" style="font-weight: 700; font-size: 14px; margin-top: 4px">{{subTx}}</div></div>
+<button type="button" class="ibtn" aria-label="Próximo ano" onClick="{{yrUp}}" disabled="{{yrMax}}">+</button>
+</div>
+</div>
+<div class="in" style="animation-delay: .1s">
+<span class="lbl">Gênero</span>
+<div class="seg"><sc-for list="{{genOpts}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div>
+</div>
+<div class="in" style="animation-delay: .15s">
+<span class="lbl">Modalidade</span>
+<div class="seg"><sc-for list="{{modOpts}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div>
+</div>
+<div class="in" style="animation-delay: .2s">
+<span class="lbl">Cidade</span>
+<div class="chips">
+<button type="button" class="chip {{gpsCls}}" aria-pressed="{{me.gps}}" onClick="{{useGps}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>GPS</button>
+<sc-for list="{{cityOpts}}" as="c" hint-placeholder-count="8"><button type="button" class="{{c.cls}}" aria-pressed="{{c.on}}" onClick="{{c.pick}}">{{c.l}}</button></sc-for>
+</div>
+<sc-if value="{{me.gps}}" hint-placeholder-val="{{false}}"><p class="mu fade" style="margin: 10px 0 0; font-size: 13px">{{gpsTx}}</p></sc-if>
+</div>
+</div>
+<div class="bottom">
+<sc-if value="{{s1Err}}" hint-placeholder-val="{{false}}"><p class="err fade" style="margin: 0 0 8px; text-align: center">Escolha a cidade ou use o GPS.</p></sc-if>
+<button type="button" class="btn" onClick="{{saveMe}}">Ver peneiras<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+</sc-if>
+
+<!-- s2 · PENEIRAS -->
+<sc-if value="{{scr.s2}}" hint-placeholder-val="{{false}}">
+<div class="scr {{dir}}">
+<div style="padding: 16px 16px 10px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div class="disp" style="width: 44px; height: 44px; border-radius: 14px; background: var(--ac); color: var(--acx); display: grid; place-items: center; font-weight: 800; font-size: 15px; flex: none">{{subShort}}</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{prof1}}</div>
+<div class="mu" style="font-size: 13px; display: flex; align-items: center; gap: 6px">{{prof2}} · <button type="button" class="lnk" onClick="{{toS1}}">alterar</button></div>
+</div>
+<button type="button" class="ibtn" aria-label="{{bellLabel}}" onClick="{{openNotes}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><sc-if value="{{unread}}" hint-placeholder-val="{{false}}"><span class="dot">{{unread}}</span></sc-if></button>
+</div>
+<h1 class="disp h1" style="font-size: 30px">{{pageTitle}}</h1>
+<div class="tabs" role="tablist">
+<span class="ind {{tabPos}}"></span>
+<sc-for list="{{tabList}}" as="t" hint-placeholder-count="4"><button type="button" role="tab" class="{{t.cls}}" aria-selected="{{t.on}}" onClick="{{t.pick}}">{{t.l}}<sc-if value="{{t.n}}" hint-placeholder-val="{{false}}"><span class="tn">{{t.n}}</span></sc-if></button></sc-for>
+</div>
+</div>
+<sc-if value="{{showFilters}}" hint-placeholder-val="{{true}}">
+<div class="chipx">
+<sc-for list="{{quick}}" as="c" hint-placeholder-count="4"><button type="button" class="{{c.cls}}" aria-pressed="{{c.on}}" onClick="{{c.pick}}"><sc-if value="{{c.heart}}" hint-placeholder-val="{{false}}"><svg class="ic sm f" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.460 3-3.210 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></sc-if>{{c.l}}</button></sc-for>
+<button type="button" class="chip {{fBtnCls}}" onClick="{{openFilters}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>Filtros<sc-if value="{{fCount}}" hint-placeholder-val="{{false}}"><span class="n">{{fCount}}</span></sc-if></button>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px 8px; font-size: 13px">
+<b style="font-size: 14px">{{countTx}}</b>
+<button type="button" class="mu" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; font-weight: 600" onClick="{{toggleSort}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"></path></svg>{{sortTx}}</button>
+<span style="flex: 1"></span>
+<button type="button" style="display: inline-flex; align-items: center; gap: 4px; min-height: 32px; font-weight: 600; color: {{alertColor}}" onClick="{{toggleAlerts}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path></svg>{{alertTx}}</button>
+</div>
+</sc-if>
+<div class="body">
+
+<!-- aba Lista -->
+<sc-if value="{{tabs.l}}" hint-placeholder-val="{{true}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 32px">
+<sc-for list="{{cards}}" as="p" hint-placeholder-count="4">
+<div class="card {{p.soon}}" style="animation-delay: {{p.delay}}">
+<button type="button" class="cm" onClick="{{p.open}}">
+<span class="dt"><span class="w">{{p.dow}}</span><span class="d disp">{{p.dd}}</span><span class="m">{{p.mon}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; font-weight: 700" class="{{p.whenCls}}">{{p.when}} · {{p.time}}<span class="mu" style="font-weight: 500"> · {{p.kmTx}}</span></span>
+<span class="disp" style="font-size: 18px; font-weight: 800; line-height: 1.15">{{p.club}}</span>
+<span class="mu" style="font-size: 13px">{{p.div}} · {{p.city}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px"><span class="{{p.kindCls}}">{{p.kind}}</span><span class="tg">{{p.cat}}</span><span class="tg">{{p.price}}</span><sc-for list="{{p.warns}}" as="w" hint-placeholder-count="0"><span class="tg warn">{{w.t}}</span></sc-for></span>
+<sc-if value="{{p.hasV}}" hint-placeholder-val="{{true}}"><span style="display: flex; align-items: center; gap: 8px; margin-top: 6px"><span class="bar"><i style="width: {{p.fill}}"></i></span><span style="font-size: 12px; font-weight: 700" class="{{p.vCls}}">{{p.vTx}}</span></span></sc-if>
+<sc-if value="{{p.deadline}}" hint-placeholder-val="{{false}}"><span class="act" style="font-size: 12px; font-weight: 700; margin-top: 4px">{{p.deadline}}</span></sc-if>
+</span>
+</button>
+<button type="button" class="fav {{p.favCls}}" aria-label="{{p.favLbl}}" aria-pressed="{{p.isFav}}" onClick="{{p.tFav}}"><svg class="ic {{p.heartCls}}" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button>
+</div>
+</sc-for>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<div class="box soft in" style="align-items: center; text-align: center; padding: 28px 18px; gap: 10px">
+<div class="disp" style="font-size: 20px; font-weight: 800">Nada por aqui ainda</div>
+<p class="mu" style="margin: 0">Nenhuma peneira com esses filtros. Tente ampliar a distância ou desligar algum chip.</p>
+<button type="button" class="btn sm" style="width: auto; margin-top: 6px" onClick="{{clearAll}}">Limpar filtros</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- aba Mapa -->
+<sc-if value="{{tabs.m}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 32px">
+<div class="map">
+<svg viewBox="0 0 560 344" aria-hidden="true"><polygon class="spp" points="{{spPts}}"></polygon></svg>
+<span class="me" style="left: {{meX}}; top: {{meY}}" title="Você"></span>
+<sc-for list="{{pins}}" as="c" hint-placeholder-count="6"><button type="button" class="{{c.cls}}" style="left: {{c.x}}; top: {{c.y}}; animation-delay: {{c.delay}}" aria-label="{{c.lbl}}" onClick="{{c.pick}}">{{c.n}}</button></sc-for>
+</div>
+<div class="mu" style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; font-weight: 600">
+<span style="display: inline-flex; align-items: center; gap: 6px"><i style="width: 12px; height: 12px; border-radius: 6px; background: var(--ac)"></i>Em até 6 dias</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><i style="width: 12px; height: 12px; border-radius: 6px; background: var(--tx)"></i>Mais adiante</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><i style="width: 12px; height: 12px; border-radius: 6px; background: #2F7BFF"></i>Você</span>
+</div>
+<sc-if value="{{mapHas}}" hint-placeholder-val="{{false}}">
+<div class="in" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between"><b>{{mapTitle}}</b><button type="button" class="ibtn" style="width: 36px; height: 36px" aria-label="Fechar" onClick="{{mapClose}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"></path></svg></button></div>
+<div class="mini">
+<sc-for list="{{mapItems}}" as="p" hint-placeholder-count="2">
+<button type="button" class="mc {{p.soon}}" onClick="{{p.open}}">
+<span style="display: block; font-size: 12px; font-weight: 700" class="{{p.whenCls}}">{{p.dow}} {{p.dd}}/{{p.mm}} · {{p.time}}</span>
+<span class="disp" style="display: block; font-size: 16px; font-weight: 800; margin-top: 4px">{{p.club}}</span>
+<span class="mu" style="display: block; font-size: 12px; margin-top: 2px">{{p.cat}} · {{p.city}} · {{p.kmTx}}</span>
+<span class="act" style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; margin-top: 8px">Ver ficha<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{mapHint}}" hint-placeholder-val="{{true}}"><p class="mu" style="margin: 0; font-size: 13px">Toque num pino para ver as peneiras. O número mostra quantas estão agrupadas ali.</p></sc-if>
+</div>
+</sc-if>
+
+<!-- aba Calendário -->
+<sc-if value="{{tabs.c}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 14px; padding: 4px 16px 32px">
+<div class="box soft" style="gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<button type="button" class="ibtn" style="width: 40px; height: 40px" aria-label="Mês anterior" onClick="{{calPrev}}" disabled="{{calNoPrev}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<b class="disp" style="font-size: 18px">{{calTitle}}</b>
+<button type="button" class="ibtn" style="width: 40px; height: 40px" aria-label="Próximo mês" onClick="{{calNext}}" disabled="{{calNoNext}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+<div class="cal">
+<sc-for list="{{wds}}" as="w" hint-placeholder-count="7"><span class="wd">{{w}}</span></sc-for>
+<sc-for list="{{calCells}}" as="d" hint-placeholder-count="35">
+<sc-if value="{{d.blank}}" hint-placeholder-val="{{false}}"><span aria-hidden="true"></span></sc-if>
+<sc-if value="{{d.day}}" hint-placeholder-val="{{true}}"><button type="button" class="{{d.cls}}" aria-label="{{d.lbl}}" onClick="{{d.pick}}">{{d.n}}<i></i></button></sc-if>
+</sc-for>
+</div>
+</div>
+<b>{{calDayTitle}}</b>
+<sc-for list="{{calItems}}" as="p" hint-placeholder-count="1">
+<button type="button" class="row in" onClick="{{p.open}}">
+<span class="dt" style="width: 54px; padding: 6px 0"><span class="d disp" style="font-size: 18px">{{p.time}}</span></span>
+<span style="flex: 1; min-width: 0"><span class="disp" style="display: block; font-weight: 800; font-size: 16px">{{p.club}}</span><span class="mu" style="display: block; font-size: 13px">{{p.cat}} · {{p.city}} · {{p.kind}}</span></span>
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+</button>
+</sc-for>
+<sc-if value="{{calNone}}" hint-placeholder-val="{{false}}"><p class="mu" style="margin: 0">Nenhuma peneira neste dia. Os dias com ponto têm peneira.</p></sc-if>
+</div>
+</sc-if>
+
+<!-- aba Histórico -->
+<sc-if value="{{tabs.h}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 32px">
+<sc-if value="{{histHas}}" hint-placeholder-val="{{true}}">
+<p class="mu" style="margin: 0; font-size: 14px">{{histSum}}</p>
+</sc-if>
+<sc-for list="{{hist}}" as="h" hint-placeholder-count="2">
+<div class="card in {{h.pastCls}}" style="animation-delay: {{h.delay}}">
+<div style="display: flex; gap: 14px; padding: 14px">
+<span class="dt"><span class="w">{{h.dow}}</span><span class="d disp">{{h.dd}}</span><span class="m">{{h.mon}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span><span class="{{h.stCls}}">{{h.stTx}}</span></span>
+<span class="disp" style="font-size: 17px; font-weight: 800; line-height: 1.15">{{h.club}}</span>
+<span class="mu" style="font-size: 13px">{{h.div}} · {{h.city}} · {{h.time}}</span>
+<span class="mu" style="font-size: 12px">{{h.sentTx}}</span>
+</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0 14px 14px">
+<button type="button" class="btn ghost sm" onClick="{{h.open}}">Ver ficha</button>
+<button type="button" class="btn ghost sm" style="color: var(--hot)" onClick="{{h.del}}">{{h.delTx}}</button>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{histEmpty}}" hint-placeholder-val="{{false}}">
+<div class="box soft in" style="align-items: center; text-align: center; padding: 28px 18px; gap: 10px">
+<div class="disp" style="font-size: 20px; font-weight: 800">Seu histórico começa aqui</div>
+<p class="mu" style="margin: 0">Quando você tocar em "Tenho interesse" numa peneira, ela aparece nesta aba com a data e a situação.</p>
+<button type="button" class="btn sm" style="width: auto; margin-top: 6px" onClick="{{toList}}">Ver peneiras</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<!-- FOLHA INFERIOR -->
+<sc-if value="{{sh.any}}" hint-placeholder-val="{{false}}">
+<div class="layer">
+<button type="button" class="ov {{shOut}}" aria-label="Fechar" onClick="{{closeSheet}}"></button>
+<div class="sheet {{shOut}}" role="dialog" aria-modal="true" aria-label="{{shLabel}}">
+<div class="grab"></div>
+<div class="sb">
+
+<!-- ficha da peneira -->
+<sc-if value="{{sh.p}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 14px">
+
+<sc-if value="{{step.info}}" hint-placeholder-val="{{true}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 14px; align-items: center">
+<span class="dt {{pv.soonDt}}" style="width: 70px; padding: 10px 0; border-radius: 18px"><span class="w">{{pv.dow}}</span><span class="d disp" style="font-size: 32px">{{pv.dd}}</span><span class="m">{{pv.mon}}</span></span>
+<div style="flex: 1; min-width: 0"><span style="font-size: 13px; font-weight: 700" class="{{pv.whenCls}}">{{pv.when}} · {{pv.time}}</span><h2 class="disp h2" style="margin-top: 4px">{{pv.club}}</h2><span class="mu" style="font-size: 14px">{{pv.div}}</span><div style="margin-top: 6px"><span class="{{pv.kindCls}}">{{pv.kind}}</span></div></div>
+</div>
+<sc-if value="{{pv.ok}}" hint-placeholder-val="{{true}}"><div class="box ok"><b style="display: flex; align-items: center; gap: 8px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>Combina com seu atleta</b><span style="font-size: 14px">{{pv.okTx}}</span></div></sc-if>
+<sc-if value="{{pv.no}}" hint-placeholder-val="{{false}}"><div class="box no"><b>Não combina com o seu perfil</b><sc-for list="{{pv.why}}" as="w" hint-placeholder-count="1"><span style="font-size: 14px">✗ {{w.t}}</span></sc-for></div></sc-if>
+<div>
+<div class="info"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg><div><b>{{pv.addr}}</b><div class="mu" style="font-size: 13px">{{pv.city}} · {{pv.kmTx}} de você</div></div></div>
+<div class="info"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg><div><b>{{pv.dateLong}}</b><div class="mu" style="font-size: 13px; white-space: pre-line">{{pv.timeLong}}</div></div></div>
+<div class="info"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg><div><b>{{pv.cat}} · {{pv.gen}}</b><div class="mu" style="font-size: 13px">{{pv.born}} · {{pv.mod}}</div></div></div>
+<div class="info"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg><div style="flex: 1"><b>{{pv.price}} · {{pv.vTx}}</b><sc-if value="{{pv.hasV}}" hint-placeholder-val="{{true}}"><div style="display: flex; align-items: center; gap: 8px; margin-top: 8px"><span class="bar"><i style="width: {{pv.fill}}"></i></span><span class="mu" style="font-size: 12px">{{pv.total}} no total</span></div></sc-if></div></div>
+<div class="info" style="border-bottom: 0"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg><div><b>O que levar</b><div class="mu" style="font-size: 13px">{{pv.req}}</div></div></div>
+</div>
+<sc-if value="{{pv.real}}" hint-placeholder-val="{{false}}"><div class="box soft" style="font-size: 13px"><b>Informação pública</b><span class="mu">{{pv.srcTx}} Confirme sempre nos canais oficiais do clube antes de ir.</span><a class="lnk" href="{{pv.src}}" target="_blank" rel="noopener" style="font-size: 13px">Abrir a fonte</a></div></sc-if>
+<div class="acts">
+<button type="button" class="ab {{pv.favCls}}" aria-pressed="{{pv.isFav}}" onClick="{{pv.tFav}}"><svg class="ic {{pv.heartCls}}" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>{{pv.favTx}}</button>
+<button type="button" class="ab" onClick="{{pv.share}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M16 6l-4-4-4 4"></path><path d="M12 2v13"></path></svg>Enviar</button>
+<button type="button" class="ab" onClick="{{pv.ics}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Agenda</button>
+<a class="ab" href="{{pv.lastHref}}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>{{pv.lastTx}}</a>
+</div>
+<sc-if value="{{pv.mine}}" hint-placeholder-val="{{false}}"><div class="box ok"><b>{{pv.mineTx}}</b><span style="font-size: 14px">{{pv.mineSub}}</span><button type="button" class="lnk" style="align-self: flex-start; font-size: 13px" onClick="{{toHist}}">Ver no histórico</button></div></sc-if>
+<sc-if value="{{pv.formBtn}}" hint-placeholder-val="{{false}}"><a class="btn" href="{{pv.form}}" target="_blank" rel="noopener" style="text-decoration: none">Inscrição no formulário oficial<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg></a></sc-if>
+<sc-if value="{{pv.canAct}}" hint-placeholder-val="{{true}}"><button type="button" class="{{pv.ctaCls}}" onClick="{{pv.act}}" disabled="{{pv.dis}}">{{pv.cta}}</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{step.contact}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 14px">
+<div><span class="eyebrow">{{pv.club}}</span><h2 class="disp h2" style="margin-top: 4px">{{pv.ctaTitle}}</h2><p class="mu" style="margin: 6px 0 0; font-size: 14px">Só 2 dados. Eles vão apenas para este clube.</p></div>
+<div class="field"><label class="lbl" for="dn">Nome do atleta</label><input id="dn" class="inp" value="{{draft.nome}}" onChange="{{dSet.nome}}" placeholder="Nome e sobrenome" autocomplete="name"></div>
+<div class="field"><label class="lbl" for="dtel">WhatsApp (do responsável, se menor de 18)</label><input id="dtel" class="inp" inputmode="tel" value="{{draft.tel}}" onChange="{{dSet.tel}}" placeholder="(11) 90000-0000" autocomplete="tel"></div>
+<div class="box soft" style="flex-direction: row; gap: 10px; font-size: 13px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span class="mu">Pedimos só o necessário. Se o atleta tiver menos de 18 anos, o responsável deve preencher e acompanhar o contato.</span></div>
+<sc-if value="{{err}}" hint-placeholder-val="{{false}}"><p class="err fade" style="margin: 0">{{err}}</p></sc-if>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px">
+<button type="button" class="btn ghost" onClick="{{toInfo}}">Voltar</button>
+<button type="button" class="btn" onClick="{{sendInt}}">Enviar</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{step.done}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 16px 0 4px">
+<div class="big-ok"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg></div>
+<h2 class="disp h2 in" style="font-size: 28px">{{doneTitle}}</h2>
+<p class="mu in" style="margin: 0; animation-delay: .06s">{{doneTx}}</p>
+<div class="in" style="display: flex; flex-direction: column; gap: 10px; width: 100%; animation-delay: .12s">
+<button type="button" class="btn" onClick="{{pv.ics}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Adicionar à agenda</button>
+<button type="button" class="btn ghost" onClick="{{toHist}}">Ver meu histórico</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<!-- filtros -->
+<sc-if value="{{sh.f}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; justify-content: space-between"><h2 class="disp h2">Filtros</h2><button type="button" class="lnk" onClick="{{clearSheet}}">Limpar</button></div>
+<div><span class="lbl">Origem</span><div class="chips"><sc-for list="{{fSrc}}" as="o" hint-placeholder-count="3"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Distância</span><div class="chips"><sc-for list="{{fDist}}" as="o" hint-placeholder-count="6"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Categoria</span><div class="chips"><sc-for list="{{fCat}}" as="o" hint-placeholder-count="13"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Modalidade</span><div class="chips"><sc-for list="{{fMod}}" as="o" hint-placeholder-count="3"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Preço</span><div class="chips"><sc-for list="{{fPrice}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<div><span class="lbl">Ordenar por</span><div class="seg"><sc-for list="{{fSort}}" as="o" hint-placeholder-count="2"><button type="button" class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.l}}</button></sc-for></div></div>
+<button type="button" class="btn" onClick="{{closeSheet}}">{{seeTx}}</button>
+</div>
+</sc-if>
+
+<!-- notificações -->
+<sc-if value="{{sh.n}}" hint-placeholder-val="{{false}}">
+<div class="fade" style="display: flex; flex-direction: column; gap: 12px">
+<h2 class="disp h2">Notificações</h2>
+<button type="button" class="row" onClick="{{toggleAlerts}}" aria-pressed="{{alerts}}">
+<span style="flex: 1"><b style="display: block">Alertas de novas peneiras</b><span class="mu" style="font-size: 13px">Avisar quando surgir peneira compatível perto de você</span></span>
+<span class="sw {{swCls}}"><i></i></span>
+</button>
+<sc-for list="{{noteList}}" as="n" hint-placeholder-count="2">
+<div class="row in" style="align-items: flex-start; animation-delay: {{n.delay}}">
+<span style="width: 10px; height: 10px; border-radius: 5px; margin-top: 6px; flex: none; background: {{n.dotBg}}"></span>
+<span style="flex: 1"><b style="display: block">{{n.t}}</b><span class="mu" style="font-size: 13px; display: block">{{n.x}}</span><span class="mu" style="font-size: 12px">{{n.ago}}</span></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{toast}}" hint-placeholder-val="{{false}}"><div class="toast" role="status">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["escuro","claro","sistema"],"default":"escuro","section":"Visual"},"destaque":{"editor":"enum","options":["lima","ciano","laranja"],"default":"lima","section":"Visual"},"$preview":{"width":390,"height":844}}'>
+const DAY = 864e5;
+const T0 = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; })();
+const Y = T0.getFullYear();
+const pad = (n) => String(n).padStart(2, '0');
+const iso = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const off = (n) => iso(new Date(T0.getFullYear(), T0.getMonth(), T0.getDate() + n));
+const pd = (s) => { const a = s.split('-'); return new Date(+a[0], a[1] - 1, +a[2]); };
+const DOW = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
+const DOWL = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+const MON = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+const MONL = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const CITIES = [
+  { n: 'São Paulo', la: -23.55, lo: -46.63 }, { n: 'Campinas', la: -22.91, lo: -47.06 }, { n: 'Santos', la: -23.96, lo: -46.33 },
+  { n: 'São José dos Campos', la: -23.18, lo: -45.88 }, { n: 'Ribeirão Preto', la: -21.18, lo: -47.81 }, { n: 'Sorocaba', la: -23.50, lo: -47.46 },
+  { n: 'Jundiaí', la: -23.19, lo: -46.88 }, { n: 'Guarulhos', la: -23.46, lo: -46.53 }, { n: 'Santo André', la: -23.66, lo: -46.53 },
+  { n: 'Osasco', la: -23.53, lo: -46.79 }, { n: 'Piracicaba', la: -22.73, lo: -47.65 }, { n: 'Bauru', la: -22.31, lo: -49.06 },
+  { n: 'São José do Rio Preto', la: -20.82, lo: -49.38 }, { n: 'Presidente Prudente', la: -22.12, lo: -51.39 }, { n: 'Taubaté', la: -23.03, lo: -45.56 },
+  { n: 'Mauá', la: -23.67, lo: -46.46 }
+];
+const cityOf = (n) => CITIES.find((c) => c.n === n) || CITIES[0];
+const SP = [[-53.1,-22.5],[-51.9,-21.0],[-51.0,-20.1],[-50.0,-19.9],[-48.9,-20.1],[-47.6,-19.8],[-47.2,-20.4],[-46.6,-21.0],[-46.4,-21.9],[-46.0,-22.4],[-45.3,-22.6],[-44.5,-22.5],[-44.2,-22.8],[-44.7,-23.4],[-45.4,-23.8],[-46.4,-24.0],[-47.2,-24.5],[-48.0,-25.2],[-48.6,-25.0],[-48.5,-24.4],[-49.3,-24.2],[-49.6,-23.6],[-50.4,-22.9],[-51.2,-22.7],[-52.2,-22.6]];
+const PX = (lo) => (lo + 53.3) * 60;
+const PY = (la) => (-19.6 - la) * 60;
+const SPPTS = SP.map((p) => PX(p[0]).toFixed(1) + ',' + PY(p[1]).toFixed(1)).join(' ');
+const dist = (a, b) => { const r = Math.PI / 180, dla = (b.la - a.la) * r, dlo = (b.lo - a.lo) * r; const h = Math.sin(dla / 2) ** 2 + Math.cos(a.la * r) * Math.cos(b.la * r) * Math.sin(dlo / 2) ** 2; return 12742 * Math.asin(Math.sqrt(h)); };
+const digits = (s) => String(s || '').replace(/\D/g, '');
+const mask = (s) => { const d = digits(s).slice(0, 11); if (d.length < 3) return d; if (d.length < 7) return '(' + d.slice(0, 2) + ') ' + d.slice(2); const k = d.length === 11 ? 7 : 6; return '(' + d.slice(0, 2) + ') ' + d.slice(2, k) + '-' + d.slice(k); };
+const mk = (id, club, div, ci, o, time, price, vagas, total, cats, gen, mod, req, addr) => {
+  const c = CITIES[ci];
+  return { id, club, div, city: c.n, addr, lat: c.la + (((id * 37) % 9) - 4) * 0.006, lon: c.lo + (((id * 53) % 9) - 4) * 0.006, date: off(o), time, price, vagas, total, cats, gen, mod, req, tel: '(11) 4000-' + pad(id).padStart(4, '0') };
+};
+const REQ = 'Chuteira, caneleira, água e documento com foto';
+// Peneiras de exemplo (fictícias): clubes, endereços e telefones inventados.
+const D = [
+  mk(1, 'Academia Garra FC', 'Base masculina', 1, 3, '09:00', 0, 12, 40, [11, 13], ['M'], ['Futebol'], REQ, 'Campo do Jardim das Flores, Rua Fictícia, 120'),
+  mk(2, 'EC Vila Aurora', 'Futsal feminino', 0, 5, '14:00', 0, 8, 30, [12, 15], ['F'], ['Futsal'], 'Tênis de futsal, água e documento com foto', 'Ginásio Vila Aurora, Av. Exemplo, 900'),
+  mk(3, 'Litoral Sports', 'Sub-15 a Sub-20', 2, 9, '08:30', 30, 0, 50, [15, 20], ['M'], ['Futebol'], REQ, 'Estádio da Orla, Rua do Porto, 45'),
+  mk(4, 'Projeto Bola Pra Frente', 'Escolinha social', 7, 2, '15:00', 0, 20, 60, [9, 12], ['M', 'F'], ['Futebol'], 'Tênis ou chuteira e água', 'Centro Comunitário, Rua das Acácias, 33'),
+  mk(5, 'Associação Alto Vale', 'Base Sub-13 a Sub-17', 3, 12, '09:00', 20, 15, 40, [13, 17], ['M'], ['Futebol'], REQ, 'CT Alto Vale, Estrada Municipal, km 4'),
+  mk(6, 'Atlético Ribeirão Norte', 'Avaliação técnica', 4, 16, '08:00', 0, 25, 80, [11, 17], ['M'], ['Futebol'], REQ, 'CT Norte, Av. dos Bandeirantes Fictícia, 2000'),
+  mk(7, 'Sorocaba Futsal Academy', 'Futsal misto', 5, 6, '18:30', 0, 6, 24, [10, 14], ['M', 'F'], ['Futsal'], 'Tênis de futsal e documento', 'Ginásio Central, Rua Exemplo, 77'),
+  mk(8, 'Jundiaí Base Clube', 'Sub-14 a Sub-18', 6, 20, '09:30', 25, 18, 40, [14, 18], ['M'], ['Futebol'], REQ, 'Campo da Serra, Rua da Uva, 15'),
+  mk(9, 'Meninas da Bola ABC', 'Feminino de base', 8, 4, '10:00', 0, 10, 30, [11, 16], ['F'], ['Futebol', 'Futsal'], REQ, 'Arena ABC, Av. Industrial Fictícia, 500'),
+  mk(10, 'Osasco Juventude EC', 'Futsal masculino', 9, 8, '16:00', 0, 2, 36, [12, 14], ['M'], ['Futsal'], 'Tênis de futsal e documento', 'Ginásio Juventude, Rua Modelo, 210'),
+  mk(11, 'Piracicaba Atlético Jovem', 'Sub-15 a Sub-20', 10, 23, '08:00', 15, 30, 60, [15, 20], ['M'], ['Futebol'], REQ, 'Campo do Engenho, Rua do Rio, 88'),
+  mk(12, 'Noroeste Paulista Academia', 'Base mista', 11, 27, '09:00', 0, 22, 50, [13, 17], ['M', 'F'], ['Futebol'], REQ, 'CT Noroeste, Av. Sem Nome, 1500'),
+  mk(13, 'Rio Preto Talentos', 'Sub-15 a Sub-19', 12, 13, '08:30', 40, 12, 40, [15, 19], ['M'], ['Futebol'], REQ, 'Estádio Municipal Fictício, Rua 7, 700'),
+  mk(14, 'Prudente Base FC', 'Base masculina', 13, 31, '09:00', 0, 40, 70, [11, 15], ['M'], ['Futebol'], REQ, 'Campo do Oeste, Rua Paraná Fictícia, 300'),
+  mk(15, 'Vale Futsal', 'Futsal Sub-9 a Sub-13', 14, 10, '19:00', 0, 9, 20, [9, 13], ['M', 'F'], ['Futsal'], 'Tênis de futsal e água', 'Ginásio do Vale, Rua das Palmeiras, 12')
+];
+// Peneiras reais, com fonte pública. Conferidas em 21/10/2026.
+const REAL = [
+  { id: 201, real: true, club: 'Ferroviária', div: 'Seletiva Guerreirinhas Grenás (feminino)', city: 'Mauá', addr: 'Rua Rosa Kasinski, 802 – Capuapava', lat: -23.667, lon: -46.461,
+    date: '2026-11-14', time: '12:00', times: 'Sub-13: 12h\nSub-15 e Sub-17: 13h', price: null, vagas: null, total: null, cats: [13, 17], anos: [2010, 2016], gen: ['F'], mod: ['Futebol'],
+    req: 'Não informado na divulgação. Leve ao menos documento com foto, chuteira e água.', deadline: '2026-10-31',
+    src: 'https://futebolpeneira.com.br/ferroviaria-sp-com-peneiras-para-o-feminino/', srcTx: 'Divulgada pela Ferroviária no Instagram e reproduzida pelo site Futebol Peneira em 18/09/2026. Inscrição por formulário on-line até 31/10.' }
+];
+const FD = { compat: true, vagas: false, fds: false, fav: false, dist: 0, cat: 0, mod: '', free: false, src: '' };
+const ME0 = { ano: Y - 13, gen: 'M', mod: 'Futebol', city: '', gps: false, la: null, lo: null, nome: '', tel: '' };
+
+function loadVpc() {
+  try {
+    const raw = localStorage.getItem('vpc1');
+    if (raw) return JSON.parse(raw) || {};
+    const me = JSON.parse(localStorage.getItem('pen_me') || 'null');
+    const fav = JSON.parse(localStorage.getItem('pen_fav') || 'null');
+    return { me: me || undefined, fav: Array.isArray(fav) ? fav : undefined };
+  } catch (e) { return {}; }
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let seen = false;
+    try { seen = sessionStorage.getItem('vpc_splash') === '1'; } catch (e) {}
+    const now = Date.now(), L = loadVpc();
+    this.state = {
+      splash: !seen, scr: 's0', dir: '',
+      me: { ...ME0, ...(L.me || {}) },
+      s1Err: false, fav: Array.isArray(L.fav) ? L.fav : [], ints: Array.isArray(L.int) ? L.int : [], taken: L.taken || {}, alerts: L.alerts !== false,
+      notes: Array.isArray(L.notes) && L.notes.length ? L.notes : [
+        { id: 1, t: 'Peneira real adicionada', x: 'Ferroviária faz seletiva feminina em Mauá no dia 14/11. Inscrições até 31/10.', ts: now - 3 * 36e5, rd: false },
+        { id: 2, t: 'Últimas vagas', x: 'Osasco Juventude EC (exemplo) tem só 2 vagas no futsal.', ts: now - DAY, rd: false }
+      ],
+      tab: 0, f: { ...FD }, sort: 'perto', mapSel: null, calOff: 0, calSel: null,
+      sheet: null, closing: false, sp: null, step: 'info', draft: { nome: '', tel: '' }, err: '', doneWait: false, toast: ''
+    };
+  }
+  componentDidMount() { if (this.state.splash) this._sp = setTimeout(() => this.endSplash(), 1800); }
+  componentDidUpdate() { this.persist(); }
+  componentWillUnmount() { clearTimeout(this._sp); clearTimeout(this._tt); clearTimeout(this._sh); }
+  persist() {
+    const s = this.state;
+    try { localStorage.setItem('vpc1', JSON.stringify({ role: 'a', me: s.me, fav: s.fav, int: s.ints, notes: s.notes.slice(0, 30), alerts: s.alerts, taken: s.taken })); } catch (e) {}
+  }
+  endSplash() { try { sessionStorage.setItem('vpc_splash', '1'); } catch (e) {} this.setState({ splash: false }); }
+  go(scr, back) { this.setState({ scr, dir: back ? 'bk' : '', sheet: null, closing: false, mapSel: null }); }
+  say(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  sheet(kind, extra) { clearTimeout(this._sh); this.setState({ sheet: kind, closing: false, ...(extra || {}) }); }
+  close() { if (!this.state.sheet || this.state.closing) return; this.setState({ closing: true }); this._sh = setTimeout(() => this.setState({ sheet: null, closing: false }), 220); }
+  note(t, x) { this.setState({ notes: [{ id: Date.now(), t, x, ts: Date.now(), rd: false }].concat(this.state.notes) }); }
+  vag(p) { return p.vagas == null ? null : Math.max(0, p.vagas - (this.state.taken[p.id] || 0)); }
+  here() { const me = this.state.me; return me.gps && me.la != null ? { la: me.la, lo: me.lo } : me.gps ? { la: -23.561, lo: -46.656 } : cityOf(me.city || 'São Paulo'); }
+  why(p, sub) {
+    const me = this.state.me, r = [];
+    if (p.anos) {
+      if (me.ano < p.anos[0] || me.ano > p.anos[1]) r.push({ t: 'aceita nascidos de ' + p.anos[0] + ' a ' + p.anos[1] + '; seu atleta nasceu em ' + me.ano, s: 'Nascidos ' + p.anos[0] + '–' + p.anos[1] });
+    } else if (sub < p.cats[0] || sub > p.cats[1]) {
+      r.push({ t: 'aceita Sub-' + p.cats[0] + ' a Sub-' + p.cats[1] + ' (nascidos em ' + (Y - p.cats[1]) + '–' + (Y - p.cats[0]) + '); seu atleta é Sub-' + sub, s: sub < p.cats[0] ? 'A partir do Sub-' + p.cats[0] : 'Até Sub-' + p.cats[1] });
+    }
+    if (!p.gen.includes(me.gen)) r.push({ t: p.gen[0] === 'F' ? 'só aceita o feminino' : 'só aceita o masculino', s: p.gen[0] === 'F' ? 'Só feminino' : 'Só masculino' });
+    if (!p.mod.includes(me.mod)) r.push({ t: 'é só de ' + p.mod.join(' e '), s: 'Só ' + p.mod.join(' e ') });
+    return r;
+  }
+  enrich(p, here, sub) {
+    const d = pd(p.date), days = Math.round((d - T0) / DAY), v = this.vag(p), why = this.why(p, sub);
+    return { ...p, d, days, v, why, ok: !why.length, km: Math.max(1, Math.round(dist(here, { la: p.lat, lo: p.lon }))), wk: d.getDay() === 0 || d.getDay() === 6 };
+  }
+  filt(list) {
+    const s = this.state, f = s.f;
+    let r = list.filter((p) => p.days >= 0);
+    if (f.compat) r = r.filter((p) => p.ok);
+    if (f.vagas) r = r.filter((p) => p.v !== 0);
+    if (f.fds) r = r.filter((p) => p.wk);
+    if (f.fav) r = r.filter((p) => s.fav.includes(p.id));
+    if (f.dist) r = r.filter((p) => p.km <= f.dist);
+    if (f.cat) r = r.filter((p) => f.cat >= p.cats[0] && f.cat <= p.cats[1]);
+    if (f.mod) r = r.filter((p) => p.mod.includes(f.mod));
+    if (f.free) r = r.filter((p) => p.price === 0);
+    if (f.src) r = r.filter((p) => (f.src === 'real' ? !!p.real : !p.real));
+    r.sort(s.sort === 'perto' ? (a, b) => a.km - b.km || a.days - b.days : (a, b) => a.days - b.days || a.km - b.km);
+    return r;
+  }
+  tFav(id) {
+    const fav = this.state.fav, on = fav.includes(id);
+    this.setState({ fav: on ? fav.filter((x) => x !== id) : fav.concat(id) });
+    this.say(on ? 'Removida das favoritas' : 'Salva nas favoritas');
+  }
+  openP(id) { const me = this.state.me; this.sheet('p', { sp: id, step: 'info', err: '', draft: { nome: me.nome || '', tel: me.tel || '' } }); }
+  addInt(p, extra) {
+    const s = this.state, wait = this.vag(p) === 0;
+    const it = { id: Date.now(), pid: p.id, sub: Y - s.me.ano, gen: s.me.gen, ts: Date.now(), mine: true, wait: !p.real && wait, real: !!p.real, ...(extra || {}) };
+    const taken = { ...s.taken }; if (!p.real && !wait) taken[p.id] = (taken[p.id] || 0) + 1;
+    this.setState({ ints: s.ints.concat(it), taken });
+    return it;
+  }
+  sendInt(p) {
+    const s = this.state, dr = s.draft;
+    if (dr.nome.trim().length < 2) return this.setState({ err: 'Digite o nome do atleta.' });
+    const t = digits(dr.tel);
+    if (t.length < 10) return this.setState({ err: 'Digite um WhatsApp com DDD.' });
+    const it = this.addInt(p, { nome: dr.nome.trim(), tel: mask(t) });
+    this.setState({ me: { ...this.state.me, nome: it.nome, tel: it.tel }, step: 'done', doneWait: it.wait, err: '' });
+    this.note(it.wait ? 'Você está na lista de espera' : 'Interesse enviado', p.club + ' · ' + p.div + '. O clube vai entrar em contato pelo WhatsApp.');
+  }
+  markReal(p) {
+    this.addInt(p);
+    this.note('Inscrição registrada no histórico', p.club + ' · ' + p.div + '. Lembre de levar o que o clube pedir.');
+    this.say('Salvo no seu histórico');
+  }
+  cancelInt(it) {
+    const s = this.state, taken = { ...s.taken };
+    if (!it.real && !it.wait && taken[it.pid]) taken[it.pid] = taken[it.pid] - 1;
+    this.setState({ ints: s.ints.filter((x) => x.id !== it.id), taken });
+    this.say('Removido do histórico');
+  }
+  useGps() {
+    const set = (la, lo, real) => { this.setState({ me: { ...this.state.me, gps: true, la, lo }, s1Err: false }); this.say(real ? 'Localização encontrada' : 'GPS indisponível aqui: usando o centro de São Paulo'); };
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => set(pos.coords.latitude, pos.coords.longitude, true), () => set(null, null, false), { timeout: 8000, maximumAge: 6e5 });
+        return;
+      }
+    } catch (e) {}
+    set(null, null, false);
+  }
+
+  renderVals() {
+    const s = this.state, me = s.me, sub = Y - me.ano;
+    const tema = this.props.tema ?? 'escuro', acc = this.props.destaque ?? 'lima';
+    const chip = (on) => 'chip' + (on ? ' on' : '');
+    const segc = (on) => (on ? 'on' : '');
+    const here = this.here();
+    const list = D.concat(REAL).map((p) => this.enrich(p, here, sub));
+    const byId = {}; list.forEach((p) => { byId[p.id] = p; });
+    const shown = this.filt(list);
+    const fmtDl = (p) => { if (!p.deadline) return ''; const dl = pd(p.deadline); return (dl < T0 ? 'Inscrições encerradas em ' : 'Inscrições até ' + DOW[dl.getDay()].toLowerCase() + ', ') + pad(dl.getDate()) + '/' + pad(dl.getMonth() + 1); };
+    const view = (p, i) => ({
+      id: p.id, dow: DOW[p.d.getDay()], dd: pad(p.d.getDate()), mm: pad(p.d.getMonth() + 1), mon: MON[p.d.getMonth()],
+      soon: p.days >= 0 && p.days <= 6 ? 'soon' : '', whenCls: p.days >= 0 && p.days <= 6 ? 'act' : '',
+      when: p.days < 0 ? 'Já aconteceu' : p.days === 0 ? 'Hoje' : p.days === 1 ? 'Amanhã' : 'Em ' + p.days + ' dias', time: p.time.replace(':', 'h'),
+      club: p.club, div: p.div, city: p.city, kmTx: p.km + ' km', cat: p.cats[0] === p.cats[1] ? 'Sub-' + p.cats[0] : 'Sub-' + p.cats[0] + ' a ' + p.cats[1],
+      kind: p.real ? 'Peneira real' : 'Exemplo', kindCls: p.real ? 'tg ok' : 'tg',
+      price: p.price == null ? 'Valor não informado' : p.price ? 'R$ ' + p.price : 'Grátis',
+      hasV: p.v != null, vTx: p.v == null ? 'Vagas não informadas' : p.v ? p.v + (p.v === 1 ? ' vaga' : ' vagas') : 'Esgotada', vCls: p.v ? '' : 'act',
+      fill: p.total ? Math.round(((p.total - p.v) / p.total) * 100) + '%' : '0%', warns: p.why.map((w) => ({ t: w.s })), deadline: fmtDl(p),
+      delay: Math.min(i || 0, 8) * 45 + 'ms', isFav: s.fav.includes(p.id), favCls: s.fav.includes(p.id) ? 'on' : '', heartCls: s.fav.includes(p.id) ? 'f' : '',
+      favLbl: s.fav.includes(p.id) ? 'Remover dos favoritos' : 'Favoritar', open: () => this.openP(p.id), tFav: () => this.tFav(p.id)
+    });
+    const cards = shown.map(view);
+
+    // perfil
+    const prof1 = 'Sub-' + sub + ' · ' + (me.gen === 'M' ? 'Masculino' : 'Feminino') + ' · ' + me.mod;
+    const prof2 = me.gps ? 'Perto de você (GPS)' : me.city;
+    const setMe = (o) => this.setState({ me: { ...this.state.me, ...o }, s1Err: false });
+    const genOpts = [['M', 'Masculino'], ['F', 'Feminino']].map(([k, l]) => ({ l, on: me.gen === k, cls: segc(me.gen === k), pick: () => setMe({ gen: k }) }));
+    const modOpts = ['Futebol', 'Futsal'].map((k) => ({ l: k, on: me.mod === k, cls: segc(me.mod === k), pick: () => setMe({ mod: k }) }));
+    const cityOpts = CITIES.map((c) => ({ l: c.n, on: !me.gps && me.city === c.n, cls: chip(!me.gps && me.city === c.n), pick: () => setMe({ city: c.n, gps: false }) }));
+
+    // filtros
+    const setF = (o) => this.setState({ f: { ...this.state.f, ...o }, mapSel: null, calSel: null });
+    const quick = [['compat', 'Compatíveis'], ['vagas', 'Com vagas'], ['fds', 'Fim de semana'], ['fav', 'Favoritas']].map(([k, l]) => ({ l, heart: k === 'fav', on: s.f[k], cls: chip(s.f[k]), pick: () => setF({ [k]: !this.state.f[k] }) }));
+    const fCount = (s.f.dist ? 1 : 0) + (s.f.cat ? 1 : 0) + (s.f.mod ? 1 : 0) + (s.f.free ? 1 : 0) + (s.f.src ? 1 : 0);
+    const opt = (arr, key) => arr.map(([v, l]) => ({ l, on: s.f[key] === v, cls: chip(s.f[key] === v), pick: () => setF({ [key]: v }) }));
+    const fSrc = opt([['', 'Todas'], ['real', 'Só reais'], ['exemplo', 'Só exemplos']], 'src');
+    const fDist = opt([[0, 'Todas'], [10, '10 km'], [25, '25 km'], [50, '50 km'], [100, '100 km'], [200, '200 km']], 'dist');
+    const fCat = opt([[0, 'Todas']].concat([9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((n) => [n, 'Sub-' + n])), 'cat');
+    const fMod = opt([['', 'Todas'], ['Futebol', 'Futebol'], ['Futsal', 'Futsal']], 'mod');
+    const fPrice = opt([[false, 'Todas'], [true, 'Só grátis']], 'free');
+    const fSort = [['perto', 'Mais próximas'], ['cedo', 'Mais cedo']].map(([v, l]) => ({ l, on: s.sort === v, cls: segc(s.sort === v), pick: () => this.setState({ sort: v }) }));
+    const n = shown.length;
+
+    // mapa
+    const W = 358, H = 220, cl = [];
+    shown.forEach((p) => {
+      const x = (PX(p.lon) / 560) * W, y = (PY(p.lat) / 344) * H;
+      const c = cl.find((c) => Math.hypot(c.x - x, c.y - y) < 22);
+      if (c) c.items.push(p); else cl.push({ x, y, items: [p] });
+    });
+    const selIds = s.mapSel || [];
+    const pins = cl.map((c, i) => {
+      const ids = c.items.map((p) => p.id), sel = selIds.length === ids.length && ids.every((id) => selIds.includes(id));
+      const cities = Array.from(new Set(c.items.map((p) => p.city)));
+      return { x: ((c.x / W) * 100).toFixed(2) + '%', y: ((c.y / H) * 100).toFixed(2) + '%', n: c.items.length, delay: i * 40 + 'ms',
+        cls: 'pin' + (c.items.some((p) => p.days <= 6) ? ' hot' : '') + (sel ? ' sel' : ''),
+        lbl: c.items.length + (c.items.length === 1 ? ' peneira em ' : ' peneiras em ') + cities.join(', '),
+        pick: () => this.setState({ mapSel: ids }) };
+    });
+    const mapItemsRaw = shown.filter((p) => selIds.includes(p.id)).sort((a, b) => a.days - b.days);
+    const mapCities = Array.from(new Set(mapItemsRaw.map((p) => p.city)));
+
+    // calendário
+    const base = new Date(T0.getFullYear(), T0.getMonth() + s.calOff, 1);
+    const first = base.getDay(), dim = new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate();
+    const byDay = {};
+    shown.forEach((p) => { (byDay[p.date] = byDay[p.date] || []).push(p); });
+    const mKey = base.getFullYear() + '-' + pad(base.getMonth() + 1);
+    const firstWith = Object.keys(byDay).filter((k) => k.slice(0, 7) === mKey).sort()[0];
+    const calSel = s.calSel && s.calSel.slice(0, 7) === mKey ? s.calSel : firstWith || (s.calOff === 0 ? iso(T0) : mKey + '-01');
+    const todayK = iso(T0);
+    const calCells = [];
+    for (let i = 0; i < first; i++) calCells.push({ blank: true, day: false });
+    for (let d = 1; d <= dim; d++) {
+      const k = mKey + '-' + pad(d), has = !!byDay[k], past = k < todayK;
+      calCells.push({ blank: false, day: true, n: d, lbl: d + ' de ' + MONL[base.getMonth()] + (has ? ', ' + byDay[k].length + ' peneira(s)' : ''),
+        cls: 'dy' + (has ? ' has' : '') + (k === calSel ? ' sel' : '') + (k === todayK ? ' today' : '') + (past ? ' past' : ''),
+        pick: () => this.setState({ calSel: k }) });
+    }
+    const selD = pd(calSel);
+    const calItems = (byDay[calSel] || []).slice().sort((a, b) => a.time.localeCompare(b.time)).map(view);
+
+    // histórico
+    const mineAll = s.ints.filter((x) => x.mine && byId[x.pid]);
+    const fmtTs = (ts) => { const d = new Date(ts); return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + ' às ' + pad(d.getHours()) + 'h' + pad(d.getMinutes()); };
+    const histRaw = mineAll.map((it) => ({ it, p: byId[it.pid] }))
+      .sort((a, b) => ((a.p.days < 0) - (b.p.days < 0)) || (a.p.days < 0 ? b.p.days - a.p.days : a.p.days - b.p.days));
+    const upcoming = histRaw.filter((h) => h.p.days >= 0).length;
+    const hist = histRaw.map(({ it, p }, i) => {
+      const v = view(p, i), past = p.days < 0;
+      return { ...v, pastCls: past ? 'past' : '',
+        stTx: past ? 'Já aconteceu' : it.real ? 'Inscrição registrada' : it.wait ? 'Lista de espera' : 'Interesse enviado',
+        stCls: 'pill ' + (past || it.wait ? 'wait' : 'ok'),
+        sentTx: (it.real ? 'Salvo em ' : 'Enviado em ') + fmtTs(it.ts) + (it.nome ? ' · ' + it.nome : ''),
+        delTx: past ? 'Remover' : it.real ? 'Remover' : 'Cancelar interesse', del: () => this.cancelInt(it) };
+    });
+
+    // notificações
+    const unread = s.notes.filter((x) => !x.rd).length;
+    const ago = (ts) => { const m = Math.round((Date.now() - ts) / 6e4); return m < 1 ? 'agora' : m < 60 ? 'há ' + m + ' min' : m < 1440 ? 'há ' + Math.round(m / 60) + ' h' : 'há ' + Math.round(m / 1440) + ' d'; };
+    const noteList = s.notes.map((x, i) => ({ t: x.t, x: x.x, ago: ago(x.ts), delay: i * 40 + 'ms', dotBg: x.rd ? 'var(--ln)' : 'var(--hot)' }));
+    const toggleAlerts = () => { const on = !this.state.alerts; this.setState({ alerts: on }); this.say(on ? 'Alertas ligados: avisamos quando surgir peneira compatível' : 'Alertas desligados'); };
+
+    // ficha da peneira
+    const P = s.sheet === 'p' ? byId[s.sp] : null;
+    let pv = {}, doneTitle = '', doneTx = '';
+    if (P) {
+      const v = view(P, 0), mine = s.ints.find((i) => i.pid === P.id && i.mine);
+      const g = P.gen.length > 1 ? 'Masculino e feminino' : P.gen[0] === 'F' ? 'Feminino' : 'Masculino';
+      const dl = P.deadline ? pd(P.deadline) : null, closed = (dl && dl < T0) || P.days < 0;
+      pv = { ...v, soonDt: P.days >= 0 && P.days <= 6 ? 'hl' : '', dateLong: DOWL[P.d.getDay()] + ', ' + P.d.getDate() + ' de ' + MONL[P.d.getMonth()],
+        timeLong: (P.times || 'Às ' + v.time) + '\nChegue 30 min antes', addr: P.addr, total: P.total, req: P.req,
+        born: P.anos ? 'nascidas(os) de ' + P.anos[0] + ' a ' + P.anos[1] : 'nascidos em ' + (Y - P.cats[1]) + (P.cats[0] !== P.cats[1] ? '–' + (Y - P.cats[0]) : ''), gen: g, mod: P.mod.join(' e '),
+        ok: P.ok, no: !P.ok, why: P.why.map((w) => ({ t: w.t })), okTx: prof1 + ' · nascido em ' + me.ano,
+        real: !!P.real, src: P.src || '', srcTx: P.srcTx || '',
+        lastHref: P.real ? P.src : 'tel:+55' + digits(P.tel), lastTx: P.real ? 'Fonte' : 'Ligar',
+        mine: !!mine, mineTx: mine ? (mine.real ? 'Salva no seu histórico' : mine.wait ? 'Você está na lista de espera' : 'Interesse enviado') : '',
+        mineSub: mine ? (mine.real ? 'A inscrição oficial é feita no formulário do clube.' : 'O clube recebeu o nome e o WhatsApp informados.') : '',
+        formBtn: !!P.real && !closed, form: P.src || '',
+        canAct: !mine && !(P.real && closed), dis: !P.ok,
+        cta: !P.ok ? 'Não combina com o seu perfil' : P.real ? 'Já me inscrevi: salvar no histórico' : P.v === 0 ? 'Entrar na lista de espera' : 'Tenho interesse',
+        ctaCls: P.real ? 'btn ghost' : 'btn',
+        act: () => (P.real ? this.markReal(P) : this.setState({ step: 'contact', err: '' })),
+        ctaTitle: P.v === 0 ? 'Lista de espera' : 'Tenho interesse', favTx: s.fav.includes(P.id) ? 'Salva' : 'Salvar',
+        share: () => { const url = 'https://vaipracima.app/?p=' + P.id; let shared = false; try { if (navigator.share) { navigator.share({ title: P.club, text: 'Peneira ' + P.div + ' em ' + P.city, url }).catch(() => {}); shared = true; } else if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {}); } catch (e) {} if (!shared) this.say('Link copiado: vaipracima.app/?p=' + P.id); },
+        ics: () => this.say('Evento pronto para a agenda: ' + v.dow + ' ' + v.dd + '/' + v.mm + ' às ' + v.time + ' (arquivo .ics na próxima versão)') };
+      doneTitle = s.doneWait ? 'Você está na fila!' : 'Bora! Interesse enviado.';
+      doneTx = s.doneWait ? 'Se abrir uma vaga, o ' + P.club + ' chama você pelo WhatsApp.' : 'O ' + P.club + ' recebeu seus dados e vai chamar pelo WhatsApp. Até ' + v.dow.toLowerCase() + ', ' + v.dd + '/' + v.mm + '!';
+    }
+    const dSet = {
+      nome: (e) => this.setState({ draft: { ...this.state.draft, nome: e.target.value }, err: '' }),
+      tel: (e) => this.setState({ draft: { ...this.state.draft, tel: mask(e.target.value) }, err: '' })
+    };
+    const toHist = () => { this.setState({ tab: 3, scr: 's2' }); this.close(); };
+
+    return {
+      tema, acc, splash: s.splash, skipSplash: () => { clearTimeout(this._sp); this.endSplash(); },
+      scr: { s0: s.scr === 's0', s1: s.scr === 's1', s2: s.scr === 's2' }, dir: s.dir,
+      start: () => this.go(this.state.me.city || this.state.me.gps ? 's2' : 's1'),
+      toS1: () => this.go('s1', true),
+      s1Back: () => this.go(this.state.me.city || this.state.me.gps ? 's2' : 's0', true),
+      me, subTx: 'Sub-' + sub, subShort: 'S' + sub, prof1, prof2,
+      yrMin: me.ano <= Y - 20, yrMax: me.ano >= Y - 9,
+      yrDown: () => setMe({ ano: Math.max(Y - 20, this.state.me.ano - 1) }), yrUp: () => setMe({ ano: Math.min(Y - 9, this.state.me.ano + 1) }),
+      genOpts, modOpts, cityOpts, gpsCls: me.gps ? 'on' : '', useGps: () => this.useGps(),
+      gpsTx: me.la != null ? 'Usando sua localização atual.' : 'Usando o centro de São Paulo. O GPS de verdade só funciona com o app aberto por um link HTTPS.',
+      s1Err: s.s1Err, saveMe: () => { if (!this.state.me.city && !this.state.me.gps) { this.setState({ s1Err: true }); return; } this.go('s2'); },
+      pageTitle: s.tab === 3 ? 'Meu histórico' : 'Peneiras pra você', showFilters: s.tab !== 3,
+      tabPos: 'p' + s.tab, tabs: { l: s.tab === 0, m: s.tab === 1, c: s.tab === 2, h: s.tab === 3 },
+      tabList: ['Lista', 'Mapa', 'Agenda', 'Histórico'].map((l, i) => ({ l, n: i === 3 ? upcoming : 0, on: s.tab === i, cls: s.tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
+      quick, fCount, fBtnCls: fCount ? 'on' : '', openFilters: () => this.sheet('f'),
+      countTx: n + (n === 1 ? ' peneira' : ' peneiras'), sortTx: s.sort === 'perto' ? 'Mais próximas' : 'Mais cedo',
+      toggleSort: () => this.setState({ sort: this.state.sort === 'perto' ? 'cedo' : 'perto' }),
+      alertTx: s.alerts ? 'Alertas ligados' : 'Alertas desligados', alertColor: s.alerts ? 'var(--act)' : 'var(--mu)', toggleAlerts, alerts: s.alerts, swCls: s.alerts ? 'on' : '',
+      unread, bellLabel: unread ? 'Notificações, ' + unread + ' novas' : 'Notificações',
+      openNotes: () => { this.sheet('n'); setTimeout(() => this.setState({ notes: this.state.notes.map((x) => ({ ...x, rd: true })) }), 900); },
+      cards, empty: !n, clearAll: () => this.setState({ f: { ...FD, compat: false } }),
+      spPts: SPPTS, pins, meX: ((PX(here.lo) / 560) * 100).toFixed(2) + '%', meY: ((PY(here.la) / 344) * 100).toFixed(2) + '%',
+      mapHas: mapItemsRaw.length > 0, mapHint: !mapItemsRaw.length, mapItems: mapItemsRaw.map(view),
+      mapTitle: mapItemsRaw.length + (mapItemsRaw.length === 1 ? ' peneira · ' : ' peneiras · ') + mapCities.join(', '), mapClose: () => this.setState({ mapSel: null }),
+      wds: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], calCells, calTitle: MONL[base.getMonth()].replace(/^./, (c) => c.toUpperCase()) + ' ' + base.getFullYear(),
+      calNoPrev: s.calOff <= 0, calNoNext: s.calOff >= 2,
+      calPrev: () => this.setState({ calOff: Math.max(0, this.state.calOff - 1), calSel: null }), calNext: () => this.setState({ calOff: Math.min(2, this.state.calOff + 1), calSel: null }),
+      calItems, calNone: !calItems.length, calDayTitle: DOWL[selD.getDay()] + ', ' + selD.getDate() + ' de ' + MONL[selD.getMonth()],
+      hist, histHas: hist.length > 0, histEmpty: !hist.length,
+      histSum: hist.length + (hist.length === 1 ? ' peneira' : ' peneiras') + ' · ' + upcoming + (upcoming === 1 ? ' próxima' : ' próximas'),
+      toList: () => this.setState({ tab: 0 }), toHist,
+      sh: { any: !!s.sheet, p: s.sheet === 'p' && !!P, f: s.sheet === 'f', n: s.sheet === 'n' },
+      shOut: s.closing ? 'out' : '', shLabel: { p: 'Ficha da peneira', f: 'Filtros', n: 'Notificações' }[s.sheet] || '', closeSheet: () => this.close(),
+      step: { info: s.step === 'info', contact: s.step === 'contact', done: s.step === 'done' }, pv, draft: s.draft, dSet, err: s.err, doneTitle, doneTx,
+      toInfo: () => this.setState({ step: 'info', err: '' }), sendInt: () => P && this.sendInt(P),
+      fSrc, fDist, fCat, fMod, fPrice, fSort, seeTx: 'Ver ' + n + (n === 1 ? ' peneira' : ' peneiras'),
+      clearSheet: () => setF({ dist: 0, cat: 0, mod: '', free: false, src: '' }),
+      noteList, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
