@@ -1,4 +1,92 @@
 {
   "atualizado_em": "2026-10-27",
-  "peneiras": []
+  "peneiras": [
+    {
+      "divisao": "Avaliação Sub-11/12 (nascidos em 2014 e 2015)",
+      "cidade": "Paulínia",
+      "endereco": "Av. Dr. Heitor Nascimento, 1120, Jardim Nossa Sra. Aparecida (em frente ao Condomínio Athenas)",
+      "lat": -22.7611,
+      "lon": -47.1542,
+      "horarios": null,
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": null,
+      "prazo": null,
+      "fonte_url": "https://www.diariodepaulinia.com.br/2026/10/seletiva-paulinia-fu-realiza-seletiva.html",
+      "fonte_texto": "Divulgada pelo Paulínia FU e publicada pelo Diário de Paulínia em 07/10/2026. Inscrições pelo link linktr.ee/pauliniafuteboluniversitario. A divulgação não diz se é masculino ou feminino; a foto mostra time masculino. Local no mapa aproximado (centro de Paulínia).",
+      "telefone": null,
+      "clube": "Paulínia FU",
+      "data": "2026-11-03",
+      "hora": "18:00",
+      "cat_min": 11,
+      "cat_max": 12,
+      "ano_min": 2014,
+      "ano_max": 2015
+    },
+    {
+      "divisao": "Avaliação Sub-15/17 (nascidos em 2010 e 2011)",
+      "cidade": "Paulínia",
+      "endereco": "Av. Dr. Heitor Nascimento, 1120, Jardim Nossa Sra. Aparecida (em frente ao Condomínio Athenas)",
+      "lat": -22.7611,
+      "lon": -47.1542,
+      "horarios": null,
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": null,
+      "prazo": null,
+      "fonte_url": "https://www.diariodepaulinia.com.br/2026/10/seletiva-paulinia-fu-realiza-seletiva.html",
+      "fonte_texto": "Divulgada pelo Paulínia FU e publicada pelo Diário de Paulínia em 07/10/2026. Inscrições pelo link linktr.ee/pauliniafuteboluniversitario. A divulgação não diz se é masculino ou feminino; a foto mostra time masculino. Local no mapa aproximado (centro de Paulínia).",
+      "telefone": null,
+      "clube": "Paulínia FU",
+      "data": "2026-11-09",
+      "hora": "14:00",
+      "cat_min": 15,
+      "cat_max": 17,
+      "ano_min": 2010,
+      "ano_max": 2011
+    },
+    {
+      "divisao": "Avaliação Sub-13/14 (nascidos em 2012 e 2013)",
+      "cidade": "Paulínia",
+      "endereco": "Av. Dr. Heitor Nascimento, 1120, Jardim Nossa Sra. Aparecida (em frente ao Condomínio Athenas)",
+      "lat": -22.7611,
+      "lon": -47.1542,
+      "horarios": null,
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": null,
+      "prazo": null,
+      "fonte_url": "https://www.diariodepaulinia.com.br/2026/10/seletiva-paulinia-fu-realiza-seletiva.html",
+      "fonte_texto": "Divulgada pelo Paulínia FU e publicada pelo Diário de Paulínia em 07/10/2026. Inscrições pelo link linktr.ee/pauliniafuteboluniversitario. A divulgação não diz se é masculino ou feminino; a foto mostra time masculino. Local no mapa aproximado (centro de Paulínia).",
+      "telefone": null,
+      "clube": "Paulínia FU",
+      "data": "2026-11-10",
+      "hora": "18:00",
+      "cat_min": 13,
+      "cat_max": 14,
+      "ano_min": 2012,
+      "ano_max": 2013
+    }
+  ]
 }
