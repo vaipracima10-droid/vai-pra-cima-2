@@ -5,6 +5,10 @@ import re, sys, pathlib
 src, react, out = map(pathlib.Path, sys.argv[1:4])
 # Cliente do Supabase (login e banco). Opcional 4º argumento; padrão: a cópia em fonte/vendor.
 supa = pathlib.Path(sys.argv[4]) if len(sys.argv) > 4 else pathlib.Path(__file__).parent / 'vendor' / 'supabase-js-2.117.3.js'
+# Mapa real: Leaflet 1.9.4 e Leaflet.markercluster 1.5.3 (fonte/vendor).
+vendor = pathlib.Path(__file__).parent / 'vendor'
+leaflet_css = (vendor / 'leaflet-1.9.4.css').read_text() + (vendor / 'leaflet.markercluster-1.5.3.css').read_text()
+leaflet_js = (vendor / 'leaflet-1.9.4.js').read_text() + '\n' + (vendor / 'leaflet.markercluster-1.5.3.js').read_text()
 s = src.read_text()
 helm = s[s.index('<helmet>') + 8:s.index('</helmet>')]
 body = s[s.index('</helmet>') + 9:s.index('</x-dc>')]
@@ -114,6 +118,8 @@ html = f"""<!doctype html>
 <meta name="description" content="Vai Pra Cima: a ponte entre você e o seu futuro. Encontre peneiras de futebol e futsal em São Paulo.">
 <title>{title}</title>
 {helm.strip()}
+<style>/* Leaflet 1.9.4 e Leaflet.markercluster 1.5.3 (BSD-2-Clause / MIT) */
+{leaflet_css}</style>
 <style>{STANDALONE_CSS}</style>
 </head>
 <body>
@@ -125,6 +131,8 @@ html = f"""<!doctype html>
 {react.read_text()}</script>
 <script>/* supabase-js 2.117.3 (MIT) */
 {supa.read_text()}</script>
+<script>/* Leaflet 1.9.4 e Leaflet.markercluster 1.5.3 (BSD-2-Clause / MIT) */
+{leaflet_js}</script>
 <script>{RUNTIME}</script>
 <script>
 {js}

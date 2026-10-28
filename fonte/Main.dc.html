@@ -25,6 +25,7 @@ a{color:inherit}a:hover{color:inherit}
 @media (prefers-color-scheme:dark){
 .t-sistema{--bg:#0B0D10;--s1:#16191F;--s2:#20242B;--ln:#2C313A;--tx:#F4F6F8;--mu:#A3ABB6;--hot:#FF8A63;--ov:rgba(0,0,0,.62)}
 .t-sistema.a-lima,.t-sistema.a-ciano,.t-sistema.a-laranja{--act:var(--ac)}
+.t-sistema .map .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.85)}
 }
 .disp{font-family:'Bricolage Grotesque','Inter',system-ui,sans-serif;letter-spacing:-.02em}
 .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -118,13 +119,17 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 .bar i{display:block;height:100%;border-radius:3px;background:var(--tx);transform-origin:left;animation:grow .7s .15s cubic-bezier(.2,.8,.2,1) both}
 .fav{position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:var(--mu)}
 .fav.on{color:var(--hot)}
-.map{position:relative;width:100%;aspect-ratio:560/344;border-radius:22px;background:var(--s1);border:1.5px solid var(--ln);overflow:hidden}
-.map svg{position:absolute;inset:0;width:100%;height:100%}
-.spp{fill:var(--s2);stroke:var(--ln);stroke-width:2}
-.pin{position:absolute;transform:translate(-50%,-50%);min-width:32px;height:32px;padding:0 8px;border-radius:16px;background:var(--tx);color:var(--bg);font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.25);animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+.map{position:relative;z-index:0;width:100%;height:min(58vh,420px);border-radius:22px;background:var(--s2);border:1.5px solid var(--ln);overflow:hidden;font-family:inherit}
+.map .leaflet-control-attribution{font-size:10px;background:color-mix(in srgb,var(--bg) 82%,transparent);color:var(--mu)}
+.map .leaflet-control-attribution a{color:var(--mu)}
+.map .leaflet-bar{border:1.5px solid var(--ln);border-radius:12px;overflow:hidden;box-shadow:none}
+.map .leaflet-bar a{width:36px;height:36px;line-height:34px;background:var(--s1);color:var(--tx);border-color:var(--ln)}
+.t-escuro .map .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.85)}
+.vpc-ic{background:none;border:0}
+.pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:32px;height:32px;padding:0 8px;border-radius:16px;background:var(--tx);color:var(--bg);font:800 13px/28px 'Inter',system-ui,sans-serif;text-align:center;border:2px solid var(--bg);box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer;animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
 .pin.hot{background:var(--ac);color:var(--acx)}
 .pin.sel{outline:3px solid var(--act);outline-offset:2px}
-.me{position:absolute;width:14px;height:14px;border-radius:7px;background:#2F7BFF;border:2px solid #fff;transform:translate(-50%,-50%)}
+.me{position:absolute;left:50%;top:50%;width:16px;height:16px;border-radius:8px;background:#2F7BFF;border:2px solid #fff;transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .me::after{content:'';position:absolute;inset:-2px;border-radius:50%;background:#2F7BFF;animation:ping 1.8s ease-out infinite}
 .mini{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
 .mini::-webkit-scrollbar{display:none}
@@ -367,11 +372,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 <!-- aba Mapa -->
 <sc-if value="{{tabs.m}}" hint-placeholder-val="{{false}}">
 <div class="fade" style="display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 32px">
-<div class="map">
-<svg viewBox="0 0 560 344" aria-hidden="true"><polygon class="spp" points="{{spPts}}"></polygon></svg>
-<span class="me" style="left: {{meX}}; top: {{meY}}" title="Você"></span>
-<sc-for list="{{pins}}" as="c" hint-placeholder-count="6"><button type="button" class="{{c.cls}}" style="left: {{c.x}}; top: {{c.y}}; animation-delay: {{c.delay}}" aria-label="{{c.lbl}}" onClick="{{c.pick}}">{{c.n}}</button></sc-for>
-</div>
+<!-- O Leaflet desenha o mapa aqui dentro (syncMap); o React não mexe nos filhos. -->
+<div class="map" id="mapa" role="region" aria-label="Mapa das peneiras"></div>
 <div class="mu" style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; font-weight: 600">
 <span style="display: inline-flex; align-items: center; gap: 6px"><i style="width: 12px; height: 12px; border-radius: 6px; background: var(--ac)"></i>Em até 6 dias</span>
 <span style="display: inline-flex; align-items: center; gap: 6px"><i style="width: 12px; height: 12px; border-radius: 6px; background: var(--tx)"></i>Mais adiante</span>
@@ -695,10 +697,8 @@ const CITIES = [
   { n: 'Mauá', la: -23.67, lo: -46.46 }
 ];
 const cityOf = (n) => CITIES.find((c) => c.n === n) || CITIES[0];
-const SP = [[-53.1,-22.5],[-51.9,-21.0],[-51.0,-20.1],[-50.0,-19.9],[-48.9,-20.1],[-47.6,-19.8],[-47.2,-20.4],[-46.6,-21.0],[-46.4,-21.9],[-46.0,-22.4],[-45.3,-22.6],[-44.5,-22.5],[-44.2,-22.8],[-44.7,-23.4],[-45.4,-23.8],[-46.4,-24.0],[-47.2,-24.5],[-48.0,-25.2],[-48.6,-25.0],[-48.5,-24.4],[-49.3,-24.2],[-49.6,-23.6],[-50.4,-22.9],[-51.2,-22.7],[-52.2,-22.6]];
-const PX = (lo) => (lo + 53.3) * 60;
-const PY = (la) => (-19.6 - la) * 60;
-const SPPTS = SP.map((p) => PX(p[0]).toFixed(1) + ',' + PY(p[1]).toFixed(1)).join(' ');
+// Pinos do mapa real (Leaflet): o número é quantas peneiras estão agrupadas ali.
+const pinIcon = (n, hot, sel) => L.divIcon({ className: 'vpc-ic', iconSize: [36, 36], html: '<span class="pin' + (hot ? ' hot' : '') + (sel ? ' sel' : '') + '">' + n + '</span>' });
 const dist = (a, b) => { const r = Math.PI / 180, dla = (b.la - a.la) * r, dlo = (b.lo - a.lo) * r; const h = Math.sin(dla / 2) ** 2 + Math.cos(a.la * r) * Math.cos(b.la * r) * Math.sin(dlo / 2) ** 2; return 12742 * Math.asin(Math.sqrt(h)); };
 const digits = (s) => String(s || '').replace(/\D/g, '');
 const mask = (s) => { const d = digits(s).slice(0, 11); if (d.length < 3) return d; if (d.length < 7) return '(' + d.slice(0, 2) + ') ' + d.slice(2); const k = d.length === 11 ? 7 : 6; return '(' + d.slice(0, 2) + ') ' + d.slice(2, k) + '-' + d.slice(k); };
@@ -804,8 +804,59 @@ class Component extends DCLogic {
       this.loadPens();
     }
   }
-  componentDidUpdate() { this.persist(); }
-  componentWillUnmount() { clearTimeout(this._sp); clearTimeout(this._tt); clearTimeout(this._sh); clearTimeout(this._pf); if (this._authSub) this._authSub.data.subscription.unsubscribe(); }
+  componentDidUpdate() { this.persist(); this.syncMap(); }
+
+  // ---- mapa real (Leaflet + OpenStreetMap) ----
+  syncMap() {
+    const el = document.getElementById('mapa');
+    if (this._map && (!el || this._map.getContainer() !== el)) { this._map.remove(); this._map = null; this._mapKey = this._fitKey = ''; }
+    if (!el || !window.L) return;
+    if (!this._map) {
+      const m = L.map(el, { scrollWheelZoom: false, zoomSnap: 0.5 });
+      m.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+      }).addTo(m);
+      const sel = (ms) => ms.length && ms.every((x) => x.options.sel);
+      this._cl = L.markerClusterGroup({
+        showCoverageOnHover: false, zoomToBoundsOnClick: false, maxClusterRadius: 44,
+        iconCreateFunction: (c) => { const ms = c.getAllChildMarkers(); return pinIcon(ms.length, ms.some((x) => x.options.hot), sel(ms)); }
+      });
+      this._cl.on('clusterclick', (e) => {
+        const c = e.layer, b = c.getBounds();
+        this.setState({ mapSel: c.getAllChildMarkers().map((x) => x.options.pid) });
+        // Peneiras no mesmo lugar não se separam com zoom: abre em leque.
+        if (b.getNorthEast().equals(b.getSouthWest()) || m.getZoom() >= m.getMaxZoom()) c.spiderfy(); else c.zoomToBounds({ padding: [40, 40] });
+      });
+      this._me = L.marker([0, 0], { icon: L.divIcon({ className: 'vpc-ic', iconSize: [20, 20], html: '<span class="me"></span>' }), interactive: false, keyboard: false, zIndexOffset: 1000, title: 'Você' });
+      m.addLayer(this._cl);
+      this._map = m;
+      setTimeout(() => this._map === m && m.invalidateSize(), 350); // depois da animação da aba
+    }
+    const shown = this._mapShown || [], here = this._mapHere, selIds = this.state.mapSel || [];
+    const dataKey = shown.map((p) => p.id + ':' + p.lat + ',' + p.lon + (p.days <= 6 ? 'h' : '')).join(';');
+    if (dataKey !== this._mapKey) {
+      this._cl.clearLayers();
+      this._cl.addLayers(shown.map((p) => {
+        const hot = p.days <= 6, sel = selIds.includes(p.id);
+        const mk = L.marker([p.lat, p.lon], { pid: p.id, hot, sel, icon: pinIcon(1, hot, sel), title: p.club + ' · ' + p.city, alt: p.club + ', ' + p.city });
+        return mk.on('click', () => this.setState({ mapSel: [p.id] }));
+      }));
+      this._mapKey = dataKey; this._selKey = selIds.join(',');
+    } else if (selIds.join(',') !== this._selKey) {
+      this._cl.getLayers().forEach((mk) => { const sel = selIds.includes(mk.options.pid); if (sel !== mk.options.sel) { mk.options.sel = sel; mk.setIcon(pinIcon(1, mk.options.hot, sel)); } });
+      this._cl.refreshClusters();
+      this._selKey = selIds.join(',');
+    }
+    this._me.setLatLng([here.la, here.lo]).addTo(this._map);
+    const fitKey = shown.map((p) => p.id).join(',') + '|' + here.la + ',' + here.lo;
+    if (fitKey !== this._fitKey) {
+      if (shown.length) this._map.fitBounds(L.latLngBounds(shown.map((p) => [p.lat, p.lon]).concat([[here.la, here.lo]])), { padding: [36, 36], maxZoom: 12 });
+      else this._map.setView([here.la, here.lo], 9);
+      this._fitKey = fitKey;
+    }
+  }
+  componentWillUnmount() { clearTimeout(this._sp); clearTimeout(this._tt); clearTimeout(this._sh); clearTimeout(this._pf); if (this._map) this._map.remove(); if (this._authSub) this._authSub.data.subscription.unsubscribe(); }
 
   // ---- banco de dados ----
   async loadPens() {
@@ -1120,22 +1171,9 @@ class Component extends DCLogic {
     const fSort = [['perto', 'Mais próximas'], ['cedo', 'Mais cedo']].map(([v, l]) => ({ l, on: s.sort === v, cls: segc(s.sort === v), pick: () => this.setState({ sort: v }) }));
     const n = shown.length;
 
-    // mapa
-    const W = 358, H = 220, cl = [];
-    shown.forEach((p) => {
-      const x = (PX(p.lon) / 560) * W, y = (PY(p.lat) / 344) * H;
-      const c = cl.find((c) => Math.hypot(c.x - x, c.y - y) < 22);
-      if (c) c.items.push(p); else cl.push({ x, y, items: [p] });
-    });
+    // mapa (desenhado pelo Leaflet em syncMap, depois de cada atualização)
     const selIds = s.mapSel || [];
-    const pins = cl.map((c, i) => {
-      const ids = c.items.map((p) => p.id), sel = selIds.length === ids.length && ids.every((id) => selIds.includes(id));
-      const cities = Array.from(new Set(c.items.map((p) => p.city)));
-      return { x: ((c.x / W) * 100).toFixed(2) + '%', y: ((c.y / H) * 100).toFixed(2) + '%', n: c.items.length, delay: i * 40 + 'ms',
-        cls: 'pin' + (c.items.some((p) => p.days <= 6) ? ' hot' : '') + (sel ? ' sel' : ''),
-        lbl: c.items.length + (c.items.length === 1 ? ' peneira em ' : ' peneiras em ') + cities.join(', '),
-        pick: () => this.setState({ mapSel: ids }) };
-    });
+    this._mapShown = shown; this._mapHere = here;
     const mapItemsRaw = shown.filter((p) => selIds.includes(p.id)).sort((a, b) => a.days - b.days);
     const mapCities = Array.from(new Set(mapItemsRaw.map((p) => p.city)));
 
@@ -1297,7 +1335,6 @@ class Component extends DCLogic {
       unread, bellLabel: unread ? 'Notificações, ' + unread + ' novas' : 'Notificações',
       openNotes: () => { this.sheet('n'); setTimeout(() => this.setState({ notes: this.state.notes.map((x) => ({ ...x, rd: true })) }), 900); },
       cards, empty: !n && !loading, clearAll: () => this.setState({ f: { ...FD, compat: false } }),
-      spPts: SPPTS, pins, meX: ((PX(here.lo) / 560) * 100).toFixed(2) + '%', meY: ((PY(here.la) / 344) * 100).toFixed(2) + '%',
       mapHas: mapItemsRaw.length > 0, mapHint: !mapItemsRaw.length, mapItems: mapItemsRaw.map(view),
       mapTitle: mapItemsRaw.length + (mapItemsRaw.length === 1 ? ' peneira · ' : ' peneiras · ') + mapCities.join(', '), mapClose: () => this.setState({ mapSel: null }),
       wds: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], calCells, calTitle: MONL[base.getMonth()].replace(/^./, (c) => c.toUpperCase()) + ' ' + base.getFullYear(),

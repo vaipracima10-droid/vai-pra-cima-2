@@ -11,7 +11,7 @@
 ## O que tem
 
 - Cadastro em 4 respostas: ano de nascimento, gênero, modalidade e cidade (ou GPS).
-- Abas **Lista**, **Mapa**, **Agenda** e **Histórico**.
+- Abas **Lista**, **Mapa** (mapa real do OpenStreetMap, com zoom e pinos agrupados), **Agenda** e **Histórico**.
 - Filtros: compatíveis, com vagas, fim de semana, favoritas, origem (reais ou exemplos), distância, categoria, modalidade e preço.
 - Ficha da peneira explicando se ela combina com o atleta e, se não combinar, por quê.
 - "Tenho interesse" pede só **nome e WhatsApp**.
@@ -65,7 +65,7 @@ python3 fonte/build.py fonte/Main.dc.html fonte/vendor/react-19.2.8.js vai_pra_c
 | `index.html` | Abre o arquivo acima (útil no GitHub Pages). |
 | `fonte/Main.dc.html` | Fonte do design, editável no canvas do Claude. |
 | `fonte/build.py` | Gera o HTML do app a partir da fonte. |
-| `fonte/vendor/` | React 19.2.8 e supabase-js 2.117.3 (MIT), embutidos no app pelo `build.py`. |
+| `fonte/vendor/` | React 19.2.8, supabase-js 2.117.3, Leaflet 1.9.4 e Leaflet.markercluster 1.5.3, embutidos no app pelo `build.py`. |
 | `supabase/schema.sql` | Tabelas, regras de acesso e peneiras iniciais do banco. |
 | `dados/peneiras-encontradas.json` | Peneiras reais achadas pela busca semanal (entram ocultas no banco). |
 | `dados/COMO-BUSCAR.md` | Regras da busca semanal e formato de cada peneira. |
