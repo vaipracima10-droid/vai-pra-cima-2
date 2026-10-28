@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-10-27",
+  "atualizado_em": "2026-10-28",
   "peneiras": [
     {
       "divisao": "Avaliação Sub-11/12 (nascidos em 2014 e 2015)",
@@ -87,6 +87,151 @@
       "cat_max": 14,
       "ano_min": 2012,
       "ano_max": 2013
+    },
+    {
+      "endereco": "Estádio Municipal Domenico Paolo Mitidieri",
+      "horarios": "Das 8h às 12h",
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "levar": "Chuteira",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "clube": "Votoraty Futebol Clube",
+      "divisao": "Avaliação de atletas (nascidos de 2010 a 2016)",
+      "cidade": "Votorantim",
+      "lat": -23.5466,
+      "lon": -47.4378,
+      "data": "2026-10-31",
+      "hora": "08:00",
+      "ano_min": 2010,
+      "ano_max": 2016,
+      "generos": [
+        "M"
+      ],
+      "fonte_url": "https://www.votorantimfacil.com.br/agenda/evento/58-avaliacao-de-atletas-votoraty-futebol-clube",
+      "fonte_texto": "Divulgada pelo Votoraty FC e pela agenda Votorantim Fácil; listada como verificada no peneira.app. Gratuita. Inscrição pelo link na bio do Instagram do clube. Local no mapa aproximado (centro de Votorantim).",
+      "cat_min": 10,
+      "cat_max": 16
+    },
+    {
+      "endereco": "CT do XV de Jaú",
+      "horarios": null,
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "levar": "Camiseta rosa, calção preto, meião preto e 5 kg de arroz (doação pedida na inscrição)",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "clube": "XV de Jaú",
+      "divisao": "Avaliação feminina Sub-11 a Sub-15 (nascidas de 2012 a 2016)",
+      "cidade": "Jaú",
+      "lat": -22.2936,
+      "lon": -48.5592,
+      "data": "2026-10-31",
+      "hora": "08:30",
+      "ano_min": 2012,
+      "ano_max": 2016,
+      "generos": [
+        "F"
+      ],
+      "fonte_url": "https://peneira.app/peneiras/e-c-xv-de-novembro-de-jau-sub-10-a-14-jau-2026-10-31",
+      "fonte_texto": "Avaliação oficial feminina divulgada no Instagram @xvdejau e no site xvdejau.com.br; verificada pelo peneira.app. Sem taxa, mas o clube pede doação de 5 kg de arroz. Inscrição por formulário. Local no mapa aproximado (centro de Jaú).",
+      "cat_min": 10,
+      "cat_max": 14
+    },
+    {
+      "endereco": "Escola de Goleiros Camisa 1",
+      "horarios": "De 31/10 a 02/11, a partir das 9h",
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "levar": null,
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "clube": "Projeto Em Busca da Camisa 1 (CBF/FPF)",
+      "divisao": "Seletiva de goleiras (nascidas de 2009 a 2015)",
+      "cidade": "Americana",
+      "lat": -22.7374,
+      "lon": -47.3331,
+      "data": "2026-10-31",
+      "hora": "09:00",
+      "ano_min": 2009,
+      "ano_max": 2015,
+      "generos": [
+        "F"
+      ],
+      "fonte_url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/cbf-lanca-projeto-nacional-para-identificar-e-formar-jovens-para-posicao-de-goleira",
+      "fonte_texto": "Projeto nacional da CBF com a Federação Paulista para identificar goleiras; Americana recebe o evento. Divulgado pela CBF, FPF, ge e Donas FC; verificado pelo peneira.app. Gratuito. Inscrição por formulário divulgado no Instagram do projeto. Local no mapa aproximado (centro de Americana).",
+      "cat_min": 11,
+      "cat_max": 17
+    },
+    {
+      "endereco": "Botafogo Academy (CT das categorias de base)",
+      "horarios": null,
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "levar": "RG do atleta e do responsável, atestado médico liberando para esporte, protocolo de inscrição, meias e calções pretos, chuteira e caneleira",
+      "prazo": "2026-11-05",
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "clube": "Botafogo-SP",
+      "divisao": "Avaliação Sub-15 e Sub-17 (nascidos de 2010 a 2013)",
+      "cidade": "Ribeirão Preto",
+      "lat": -21.1775,
+      "lon": -47.8103,
+      "data": "2026-11-07",
+      "hora": "09:00",
+      "ano_min": 2010,
+      "ano_max": 2013,
+      "generos": [
+        "M"
+      ],
+      "fonte_url": "https://botafogofutebolsa.com.br/botafogo-realizara-avaliacao-para-as-categorias-sub-15-e-sub-17-visando-o-campeonato-paulista-em-2027",
+      "fonte_texto": "Divulgada no site oficial do Botafogo Futebol S/A, para atletas de Ribeirão Preto e região. Inscrição on-line até 05/11; em 06/11, das 13h às 19h, retirar o protocolo na Botafogo Academy com os documentos. Gratuita. Local no mapa aproximado (centro de Ribeirão Preto).",
+      "cat_min": 13,
+      "cat_max": 16
+    },
+    {
+      "endereco": "CT do XV de Jaú",
+      "horarios": null,
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "levar": "Camiseta branca, calção preto, meia preta e doação de alimento conforme a categoria (3 kg de arroz, macarrão ou feijão, ou 3 L de óleo ou leite)",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "clube": "XV de Jaú",
+      "divisao": "Avaliação masculina Sub-9 a Sub-17 (nascidos de 2009 a 2017)",
+      "cidade": "Jaú",
+      "lat": -22.2936,
+      "lon": -48.5592,
+      "data": "2026-11-07",
+      "hora": "08:00",
+      "ano_min": 2009,
+      "ano_max": 2017,
+      "generos": [
+        "M"
+      ],
+      "fonte_url": "https://peneira.app/peneiras/e-c-xv-de-novembro-de-jau-sub-9-a-17-jau-2026-11-07",
+      "fonte_texto": "Divulgada no Instagram @base.xvdejau (09/10/2026) e no site do clube; verificada pelo peneira.app. Sem taxa, com doação de alimento. Inscrição por formulário. Local no mapa aproximado (centro de Jaú).",
+      "cat_min": 9,
+      "cat_max": 17
     }
   ]
 }
