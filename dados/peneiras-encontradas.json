@@ -1,35 +1,6 @@
 {
-  "atualizado_em": "2026-10-28",
+  "atualizado_em": "2026-11-07",
   "peneiras": [
-    {
-      "divisao": "Avaliação Sub-11/12 (nascidos em 2014 e 2015)",
-      "cidade": "Paulínia",
-      "endereco": "Av. Dr. Heitor Nascimento, 1120, Jardim Nossa Sra. Aparecida (em frente ao Condomínio Athenas)",
-      "lat": -22.7611,
-      "lon": -47.1542,
-      "horarios": null,
-      "preco": null,
-      "vagas": null,
-      "total": null,
-      "generos": [
-        "M"
-      ],
-      "modalidades": [
-        "Futebol"
-      ],
-      "levar": null,
-      "prazo": null,
-      "fonte_url": "https://www.diariodepaulinia.com.br/2026/10/seletiva-paulinia-fu-realiza-seletiva.html",
-      "fonte_texto": "Divulgada pelo Paulínia FU e publicada pelo Diário de Paulínia em 07/10/2026. Inscrições pelo link linktr.ee/pauliniafuteboluniversitario. A divulgação não diz se é masculino ou feminino; a foto mostra time masculino. Local no mapa aproximado (centro de Paulínia).",
-      "telefone": null,
-      "clube": "Paulínia FU",
-      "data": "2026-11-03",
-      "hora": "18:00",
-      "cat_min": 11,
-      "cat_max": 12,
-      "ano_min": 2014,
-      "ano_max": 2015
-    },
     {
       "divisao": "Avaliação Sub-15/17 (nascidos em 2010 e 2011)",
       "cidade": "Paulínia",
@@ -89,93 +60,6 @@
       "ano_max": 2013
     },
     {
-      "endereco": "Estádio Municipal Domenico Paolo Mitidieri",
-      "horarios": "Das 8h às 12h",
-      "preco": 0,
-      "vagas": null,
-      "total": null,
-      "levar": "Chuteira",
-      "prazo": null,
-      "telefone": null,
-      "modalidades": [
-        "Futebol"
-      ],
-      "clube": "Votoraty Futebol Clube",
-      "divisao": "Avaliação de atletas (nascidos de 2010 a 2016)",
-      "cidade": "Votorantim",
-      "lat": -23.5466,
-      "lon": -47.4378,
-      "data": "2026-10-31",
-      "hora": "08:00",
-      "ano_min": 2010,
-      "ano_max": 2016,
-      "generos": [
-        "M"
-      ],
-      "fonte_url": "https://www.votorantimfacil.com.br/agenda/evento/58-avaliacao-de-atletas-votoraty-futebol-clube",
-      "fonte_texto": "Divulgada pelo Votoraty FC e pela agenda Votorantim Fácil; listada como verificada no peneira.app. Gratuita. Inscrição pelo link na bio do Instagram do clube. Local no mapa aproximado (centro de Votorantim).",
-      "cat_min": 10,
-      "cat_max": 16
-    },
-    {
-      "endereco": "CT do XV de Jaú",
-      "horarios": null,
-      "preco": 0,
-      "vagas": null,
-      "total": null,
-      "levar": "Camiseta rosa, calção preto, meião preto e 5 kg de arroz (doação pedida na inscrição)",
-      "prazo": null,
-      "telefone": null,
-      "modalidades": [
-        "Futebol"
-      ],
-      "clube": "XV de Jaú",
-      "divisao": "Avaliação feminina Sub-11 a Sub-15 (nascidas de 2012 a 2016)",
-      "cidade": "Jaú",
-      "lat": -22.2936,
-      "lon": -48.5592,
-      "data": "2026-10-31",
-      "hora": "08:30",
-      "ano_min": 2012,
-      "ano_max": 2016,
-      "generos": [
-        "F"
-      ],
-      "fonte_url": "https://peneira.app/peneiras/e-c-xv-de-novembro-de-jau-sub-10-a-14-jau-2026-10-31",
-      "fonte_texto": "Avaliação oficial feminina divulgada no Instagram @xvdejau e no site xvdejau.com.br; verificada pelo peneira.app. Sem taxa, mas o clube pede doação de 5 kg de arroz. Inscrição por formulário. Local no mapa aproximado (centro de Jaú).",
-      "cat_min": 10,
-      "cat_max": 14
-    },
-    {
-      "endereco": "Escola de Goleiros Camisa 1",
-      "horarios": "De 31/10 a 02/11, a partir das 9h",
-      "preco": 0,
-      "vagas": null,
-      "total": null,
-      "levar": null,
-      "prazo": null,
-      "telefone": null,
-      "modalidades": [
-        "Futebol"
-      ],
-      "clube": "Projeto Em Busca da Camisa 1 (CBF/FPF)",
-      "divisao": "Seletiva de goleiras (nascidas de 2009 a 2015)",
-      "cidade": "Americana",
-      "lat": -22.7374,
-      "lon": -47.3331,
-      "data": "2026-10-31",
-      "hora": "09:00",
-      "ano_min": 2009,
-      "ano_max": 2015,
-      "generos": [
-        "F"
-      ],
-      "fonte_url": "https://www.cbf.com.br/selecao-brasileira/noticias/selecao-feminina-principal/a/cbf-lanca-projeto-nacional-para-identificar-e-formar-jovens-para-posicao-de-goleira",
-      "fonte_texto": "Projeto nacional da CBF com a Federação Paulista para identificar goleiras; Americana recebe o evento. Divulgado pela CBF, FPF, ge e Donas FC; verificado pelo peneira.app. Gratuito. Inscrição por formulário divulgado no Instagram do projeto. Local no mapa aproximado (centro de Americana).",
-      "cat_min": 11,
-      "cat_max": 17
-    },
-    {
       "endereco": "Botafogo Academy (CT das categorias de base)",
       "horarios": null,
       "preco": 0,
@@ -232,6 +116,35 @@
       "fonte_texto": "Divulgada no Instagram @base.xvdejau (09/10/2026) e no site do clube; verificada pelo peneira.app. Sem taxa, com doação de alimento. Inscrição por formulário. Local no mapa aproximado (centro de Jaú).",
       "cat_min": 9,
       "cat_max": 17
+    },
+    {
+      "clube": "Mauá Futebol Clube",
+      "divisao": "Avaliação Sub-20 a Sub-23 (nascidos de 2004 a 2006)",
+      "cidade": "Mauá",
+      "endereco": "Campo do Vila Mercedes (society) – Rua José Ricardo Nalle, 750 – Vila Mercedes",
+      "lat": -23.668,
+      "lon": -46.461,
+      "data": "2026-11-09",
+      "hora": "10:00",
+      "horarios": null,
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "cat_min": 20,
+      "cat_max": 20,
+      "ano_min": 2004,
+      "ano_max": 2006,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": "RG do atleta, atestado de aptidão física do mês, meião preto, calção preto, camiseta branca e chuteira society",
+      "prazo": null,
+      "fonte_url": "https://peneira.app/peneiras/maua-futebol-clube-sub-20-a-22-maua-2026-11-09",
+      "fonte_texto": "Listada como verificada no peneira.app, que confirmou o anúncio no Instagram (instagram.com/p/DfS9bIlIW05) e no Facebook oficiais do Mauá FC em 04/11/2026. Gratuita (Lei Pelé, art. 29). A categoria é Profissional/Sub-23: aceita nascidos de 2004 a 2006, então no app aparece como Sub-20. Gênero masculino segundo o catálogo; a página não informa prazo de inscrição nem telefone. Local no mapa aproximado (centro de Mauá).",
+      "telefone": null
     }
   ]
 }
