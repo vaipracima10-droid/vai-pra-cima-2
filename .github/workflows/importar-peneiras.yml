@@ -7,6 +7,9 @@ on:
     paths: [dados/peneiras-encontradas.json]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   importar:
     runs-on: ubuntu-latest
