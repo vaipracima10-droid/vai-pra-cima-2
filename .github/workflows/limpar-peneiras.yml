@@ -1,0 +1,21 @@
+name: Limpar peneiras fictícias e passadas
+
+# Só roda à mão: Actions › Limpar peneiras fictícias e passadas › Run workflow.
+on:
+  workflow_dispatch:
+    inputs:
+      apagar:
+        description: 'Apagar de verdade? (desmarcado = só lista o que seria apagado)'
+        type: boolean
+        default: false
+
+jobs:
+  limpar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apagar exemplos e peneiras que já aconteceram
+        env:
+          SUPABASE_URL: https://xnjfotolajdhpwsmqewi.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 scripts/limpar_peneiras.py ${{ inputs.apagar && ' ' || '--dry-run' }}
