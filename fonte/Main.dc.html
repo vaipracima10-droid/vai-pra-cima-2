@@ -786,8 +786,7 @@ class Component extends DCLogic {
       user: null, auth: { ...AU0 }, pens: null, pensErr: false, ocup: {}, allInts: [], admQ: '', admFil: 'todas',
       ed: null, edId: null, edErr: '', edBusy: false, edDel: false,
       notes: Array.isArray(L.notes) && L.notes.length ? L.notes : [
-        { id: 1, t: 'Peneira real adicionada', x: 'Ferroviária faz seletiva feminina em Mauá no dia 14/11. Inscrições até 31/10.', ts: now - 3 * 36e5, rd: false },
-        { id: 2, t: 'Últimas vagas', x: 'Osasco Juventude EC (exemplo) tem só 2 vagas no futsal.', ts: now - DAY, rd: false }
+        { id: 1, t: 'Bem-vindo ao Vai Pra Cima', x: 'Quando sair peneira nova para a sua categoria, avisamos aqui.', ts: now, rd: false }
       ],
       tab: 0, f: { ...FD }, sort: 'perto', mapSel: null, calOff: 0, calSel: null,
       sheet: null, closing: false, sp: null, step: 'info', draft: { nome: '', tel: '' }, err: '', doneWait: false, toast: ''
@@ -955,7 +954,7 @@ class Component extends DCLogic {
   }
   edFrom(p) {
     const s = (v) => (v == null ? '' : String(v));
-    if (!p) return { real: false, club: '', divisao: '', city: 'São Paulo', city0: null, lat: null, lon: null, addr: '', data: off(7), hora: '09:00', times: '', cmin: '11', cmax: '17', gen: ['M'], mod: ['Futebol'], preco: '0', tel: '', vagas: '', total: '', req: REQ, prazo: '', amin: '', amax: '', src: '', srcTx: '', ativa: true };
+    if (!p) return { real: true, club: '', divisao: '', city: 'São Paulo', city0: null, lat: null, lon: null, addr: '', data: off(7), hora: '09:00', times: '', cmin: '11', cmax: '17', gen: ['M'], mod: ['Futebol'], preco: '0', tel: '', vagas: '', total: '', req: REQ, prazo: '', amin: '', amax: '', src: '', srcTx: '', ativa: true };
     return { real: !!p.real, club: p.club, divisao: p.div, city: p.city, city0: p.city, lat: p.lat, lon: p.lon, addr: p.addr, data: p.date, hora: p.time, times: (p.times || '').replace(/\n/g, '; '),
       cmin: s(p.cats[0]), cmax: s(p.cats[1]), gen: p.gen.slice(), mod: p.mod.slice(), preco: s(p.price), tel: p.tel || '', vagas: s(p.vagas), total: s(p.total), req: p.req || '',
       prazo: p.deadline || '', amin: p.anos ? s(p.anos[0]) : '', amax: p.anos ? s(p.anos[1]) : '', src: p.src || '', srcTx: p.srcTx || '', ativa: p.ativa !== false };

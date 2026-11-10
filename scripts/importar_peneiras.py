@@ -21,6 +21,19 @@ def chave(clube, data):
     return re.sub(r'[^a-z0-9]', '', t) + '|' + str(data)
 
 
+def inteiro(v):
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+def numero(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def credenciais():
+    """SUPABASE_URL e SUPABASE_SERVICE_KEY do ambiente (vazias se faltarem)."""
+    return os.environ.get('SUPABASE_URL', '').rstrip('/'), os.environ.get('SUPABASE_SERVICE_KEY', '')
+
+
 def problema(p):
     """Devolve o motivo para pular a peneira, ou None se ela estiver boa."""
     for k in ('clube', 'divisao', 'cidade', 'data', 'hora', 'cat_min', 'cat_max', 'generos', 'modalidades', 'fonte_url', 'lat', 'lon'):
@@ -30,18 +43,27 @@ def problema(p):
         return 'data inválida'
     if p['data'] < HOJE:
         return 'já aconteceu'
-    if not re.fullmatch(r'\d{2}:\d{2}', str(p['hora'])):
+    if not re.fullmatch(r'([01]\d|2[0-3]):[0-5]\d', str(p['hora'])):
         return 'hora inválida (use HH:MM)'
-    if not (isinstance(p['cat_min'], int) and isinstance(p['cat_max'], int) and 9 <= p['cat_min'] <= p['cat_max'] <= 20):
+    if not 2 <= len(str(p['clube'])) <= 120:
+        return 'nome do clube precisa ter de 2 a 120 letras'
+    if not (inteiro(p['cat_min']) and inteiro(p['cat_max']) and 9 <= p['cat_min'] <= p['cat_max'] <= 20):
         return 'categorias precisam ir de 9 a 20'
-    if not set(p['generos']) <= {'M', 'F'} or not set(p['modalidades']) <= {'Futebol', 'Futsal'}:
-        return 'gênero ou modalidade inválidos'
+    if not (isinstance(p['generos'], list) and set(p['generos']) <= {'M', 'F'}
+            and isinstance(p['modalidades'], list) and set(p['modalidades']) <= {'Futebol', 'Futsal'}):
+        return 'gênero ou modalidade inválidos (use listas, ex.: ["M"] e ["Futebol"])'
     if not str(p['fonte_url']).startswith('https://'):
         return 'fonte_url precisa começar com https://'
-    if not (-25.5 <= p['lat'] <= -19.5 and -53.5 <= p['lon'] <= -44.0):
-        return 'lat/lon fora do estado de São Paulo'
-    if (p.get('ano_min') is None) != (p.get('ano_max') is None):
+    if not (numero(p['lat']) and numero(p['lon']) and -25.5 <= p['lat'] <= -19.5 and -53.5 <= p['lon'] <= -44.0):
+        return 'lat/lon precisam ser números dentro do estado de São Paulo'
+    amin, amax = p.get('ano_min'), p.get('ano_max')
+    if (amin is None) != (amax is None):
         return 'preencha ano_min e ano_max juntos'
+    if amin is not None and not (inteiro(amin) and inteiro(amax) and amin <= amax):
+        return 'ano_min e ano_max precisam ser números, com ano_min <= ano_max'
+    for k in ('preco', 'vagas', 'total'):
+        if p.get(k) is not None and not (numero(p[k]) and p[k] >= 0):
+            return k + ' precisa ser um número >= 0'
     if p.get('prazo') and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(p['prazo'])):
         return 'prazo inválido'
     return None
@@ -66,7 +88,7 @@ def main():
     lista = json.load(open(args[0] if args else 'dados/peneiras-encontradas.json', encoding='utf-8'))['peneiras']
     if not lista:
         return print('A lista está vazia: nada a enviar.')
-    url, key = os.environ.get('SUPABASE_URL', '').rstrip('/'), os.environ.get('SUPABASE_SERVICE_KEY', '')
+    url, key = credenciais()
     if not url or not key:
         if not seco:
             sys.exit('Falta SUPABASE_URL ou SUPABASE_SERVICE_KEY. Veja "Busca automática" no README.')

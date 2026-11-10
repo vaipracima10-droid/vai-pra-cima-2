@@ -131,7 +131,8 @@ create or replace function public.interesse_antes()
 returns trigger language plpgsql security definer set search_path = '' as $$
 declare p public.peneiras;
 begin
-  select * into p from public.peneiras where id = new.peneira_id;
+  -- "for update" trava a peneira: dois cliques ao mesmo tempo não passam do número de vagas.
+  select * into p from public.peneiras where id = new.peneira_id for update;
   if not found then raise exception 'Peneira não encontrada'; end if;
   new.user_id := auth.uid();
   new.origem_real := p.origem_real;
