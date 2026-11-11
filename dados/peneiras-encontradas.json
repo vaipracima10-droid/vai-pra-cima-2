@@ -2,6 +2,64 @@
   "atualizado_em": "2026-11-11",
   "peneiras": [
     {
+      "endereco": "Ginásio de Esportes Noêmia Assunção, Rua Custódia, 50, Jardim Santo Antônio",
+      "horarios": "Todas as terças e quintas de novembro (12, 17, 19, 24 e 26/11). Sub-17 (2010 e 2011) às 13h30; Sub-15 (2012 e 2013) às 15h.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "levar": "Roupa apropriada para prática esportiva.",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futsal"
+      ],
+      "generos": [
+        "M"
+      ],
+      "clube": "AD Santo André Futsal",
+      "divisao": "Seletiva de futsal Sub-15 e Sub-17, só para atletas federados",
+      "cidade": "Santo André",
+      "lat": -23.6639,
+      "lon": -46.5383,
+      "data": "2026-11-12",
+      "hora": "13:30",
+      "cat_min": 13,
+      "cat_max": 16,
+      "ano_min": 2010,
+      "ano_max": 2013,
+      "fonte_url": "https://www.instagram.com/adsafutsal_oficial/",
+      "fonte_texto": "Divulgada pela AD Santo André Futsal no Instagram em 04/11/2026 (seletiva temporada 2027). Exclusiva para atletas federados. Inscrição pelo link na bio do clube. O post não diz se é masculino ou feminino nem o preço. Local no mapa aproximado (centro de Santo André)."
+    },
+    {
+      "endereco": "C.R.E. Sete de Setembro, Rua Nelson, 231, bairro Mauá",
+      "horarios": "Nascidos em 2016 às 14h; nascidos em 2015 às 15h30.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "levar": "Chuteira de society, bermuda e meião pretos, camisa branca, RG original e atestado médico (indispensável).",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futebol"
+      ],
+      "generos": [
+        "M"
+      ],
+      "clube": "São Caetano",
+      "divisao": "Avaliação Sub-10 e Sub-11 (nascidos em 2015 e 2016)",
+      "cidade": "São Caetano do Sul",
+      "lat": -23.6229,
+      "lon": -46.5548,
+      "data": "2026-11-13",
+      "hora": "14:00",
+      "cat_min": 10,
+      "cat_max": 11,
+      "ano_min": 2015,
+      "ano_max": 2016,
+      "fonte_url": "https://www.instagram.com/saocaetano_iniciacao/",
+      "fonte_texto": "Divulgada pela iniciação do São Caetano no Instagram (@saocaetano_iniciacao), vista em 11/11/2026. O post não diz se é masculino ou feminino nem o preço. Local no mapa aproximado (centro de São Caetano do Sul)."
+    },
+    {
       "clube": "Guaratinguetá SAF",
       "divisao": "Avaliação masculina Sub-15/16 (nascidos em 2010 e 2011)",
       "cidade": "Guaratinguetá",
@@ -116,6 +174,64 @@
       "fonte_url": "https://peneira.app/peneiras",
       "fonte_texto": "Anunciada nas redes oficiais do EC São Bento e listada no peneira.app (3 fontes consultadas): 16/11/2026, gratuita, masculino, nascidos de 2006 a 2018. Inscrição pela página oficial de inscrições do clube. O clube também aceita Sub-8 (nascidos em 2018), que o app mostra como Sub-9. Local no mapa aproximado (centro de Sorocaba).",
       "telefone": null
+    },
+    {
+      "endereco": null,
+      "horarios": "Sub-17 (2010 e 2011) das 18h às 20h; Sub-15 (2012 e 2013) das 20h às 22h.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "levar": "Camiseta lisa branca ou preta (proibido camisa de clube). Só um acompanhante por atleta.",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futsal"
+      ],
+      "generos": [
+        "M"
+      ],
+      "clube": "C.A. Ypiranga Futsal",
+      "divisao": "Avaliação de futsal Sub-15 e Sub-17, só para atletas federados em 2026",
+      "cidade": "São Paulo",
+      "lat": -23.5869,
+      "lon": -46.6076,
+      "data": "2026-11-17",
+      "hora": "18:00",
+      "cat_min": 13,
+      "cat_max": 16,
+      "ano_min": 2010,
+      "ano_max": 2013,
+      "fonte_url": "https://www.instagram.com/cay_futsal/",
+      "fonte_texto": "Divulgada pelo CAY Futsal no Instagram (avaliações da base 2027), vista em 11/11/2026. Só para atletas federados em 2026. Inscrição obrigatória pelo formulário https://forms.gle/oRbXihRbkwzQ254F9; sem a ficha não entra no clube. O post não diz se é masculino ou feminino nem o preço. Local no mapa aproximado (bairro do Ipiranga, São Paulo)."
+    },
+    {
+      "endereco": null,
+      "horarios": "Sub-13 (2014) das 18h às 20h; Sub-12 (2015) das 20h às 22h.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "levar": "Camiseta lisa branca ou preta (proibido camisa de clube). Só um acompanhante por atleta.",
+      "prazo": null,
+      "telefone": null,
+      "modalidades": [
+        "Futsal"
+      ],
+      "generos": [
+        "M"
+      ],
+      "clube": "C.A. Ypiranga Futsal",
+      "divisao": "Avaliação de futsal Sub-12 e Sub-13, só para atletas federados em 2026",
+      "cidade": "São Paulo",
+      "lat": -23.5869,
+      "lon": -46.6076,
+      "data": "2026-11-19",
+      "hora": "18:00",
+      "cat_min": 11,
+      "cat_max": 12,
+      "ano_min": 2014,
+      "ano_max": 2015,
+      "fonte_url": "https://www.instagram.com/cay_futsal/",
+      "fonte_texto": "Divulgada pelo CAY Futsal no Instagram (avaliações da base 2027), vista em 11/11/2026. Só para atletas federados em 2026. Inscrição obrigatória pelo formulário https://forms.gle/oRbXihRbkwzQ254F9; sem a ficha não entra no clube. O post não diz se é masculino ou feminino nem o preço. Local no mapa aproximado (bairro do Ipiranga, São Paulo)."
     },
     {
       "clube": "Athlético de Amparo",
