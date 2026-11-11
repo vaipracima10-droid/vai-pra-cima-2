@@ -263,6 +263,35 @@
       "fonte_texto": "Divulgada pela Chute Inicial Corinthians Vila Ré (escolinha licenciada) no Instagram em 03/11/2026. É peneira para a escolinha, com chance de bolsa integral, não para a base do Corinthians. Inscrição pelo WhatsApp do link na bio. O post não diz se é masculino ou feminino, o preço nem o endereço. Nascidos depois de 2017 aparecem no app como Sub-9. Local no mapa aproximado (Vila Ré, São Paulo)."
     },
     {
+      "clube": "Mogi das Cruzes EC",
+      "divisao": "Avaliação de futsal Sub-12 a Sub-20 (temporada 2027, A1 da Federação Paulista)",
+      "cidade": "Mogi das Cruzes",
+      "endereco": "CEMPRE Benedito Ferreira Lopes (CAIC), Rua Professora Alice Thereza Cotrim Guerreiro da Silva, 22, Vila Lavínia",
+      "lat": -23.5229,
+      "lon": -46.1883,
+      "data": "2026-11-28",
+      "hora": "09:00",
+      "horarios": "A partir das: Sub-12 (2015) 9h; Sub-13 (2014) 10h30; Sub-15 (2012 e 2013) 12h; Sub-17 (2010 e 2011) 13h30; Sub-20 (2007 a 2009) 15h.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "cat_min": 11,
+      "cat_max": 19,
+      "ano_min": 2007,
+      "ano_max": 2015,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futsal"
+      ],
+      "levar": "Camiseta branca, shorts preto e tênis de futsal (roupa obrigatória), RG original e 1 kg de alimento não perecível.",
+      "prazo": null,
+      "telefone": "(11) 98450-1687 (Lucas, WhatsApp)",
+      "fonte_url": "https://www.instagram.com/mogi_esporteclube/",
+      "fonte_texto": "Divulgada pelo Mogi das Cruzes Esporte Clube no Instagram, vista em 11/11/2026. Contato pelo WhatsApp (11) 98450-1687, com Lucas. O post não diz se é masculino ou feminino nem se há taxa além do alimento. Local no mapa aproximado (centro de Mogi das Cruzes)."
+    },
+    {
       "clube": "Athlético de Amparo",
       "divisao": "Avaliação masculina Sub-10 a Sub-15 (nascidos de 2011 a 2016)",
       "cidade": "Amparo",
