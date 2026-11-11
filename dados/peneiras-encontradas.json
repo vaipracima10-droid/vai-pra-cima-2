@@ -1,40 +1,11 @@
 {
-  "atualizado_em": "2026-11-09",
+  "atualizado_em": "2026-11-11",
   "peneiras": [
-    {
-      "divisao": "Avaliação Sub-13/14 (nascidos em 2012 e 2013)",
-      "cidade": "Paulínia",
-      "endereco": "Av. Dr. Heitor Nascimento, 1120, Jardim Nossa Sra. Aparecida (em frente ao Condomínio Athenas)",
-      "lat": -22.7611,
-      "lon": -47.1542,
-      "horarios": null,
-      "preco": null,
-      "vagas": null,
-      "total": null,
-      "generos": [
-        "M"
-      ],
-      "modalidades": [
-        "Futebol"
-      ],
-      "levar": null,
-      "prazo": null,
-      "fonte_url": "https://www.diariodepaulinia.com.br/2026/10/seletiva-paulinia-fu-realiza-seletiva.html",
-      "fonte_texto": "Divulgada pelo Paulínia FU e publicada pelo Diário de Paulínia em 07/10/2026. Inscrições pelo link linktr.ee/pauliniafuteboluniversitario. A divulgação não diz se é masculino ou feminino; a foto mostra time masculino. Local no mapa aproximado (centro de Paulínia).",
-      "telefone": null,
-      "clube": "Paulínia FU",
-      "data": "2026-11-10",
-      "hora": "18:00",
-      "cat_min": 13,
-      "cat_max": 14,
-      "ano_min": 2012,
-      "ano_max": 2013
-    },
     {
       "clube": "Guaratinguetá SAF",
       "divisao": "Avaliação masculina Sub-15/16 (nascidos em 2010 e 2011)",
       "cidade": "Guaratinguetá",
-      "endereco": "Campo Chico Vaz (Barão do Rio Branco)",
+      "endereco": "Centro Esportivo Chico Vaz, Rua Barão do Rio Branco, 585",
       "lat": -22.8164,
       "lon": -45.1925,
       "data": "2026-11-14",
@@ -53,22 +24,80 @@
       "modalidades": [
         "Futebol"
       ],
-      "levar": "Atestado médico dos últimos 6 meses, RG do atleta e do responsável, chuteira e caneleira, camisa branca, shorts e meião pretos. O termo de responsabilidade é preenchido no dia.",
+      "levar": "Atestado médico de até 6 meses, RG do atleta e do responsável, chuteira e caneleira. Um responsável maior de idade precisa acompanhar o atleta.",
       "prazo": null,
       "fonte_url": "https://peneira.app/peneiras/guaratingueta-saf-sub-16-guaratingueta-2026-11-14",
-      "fonte_texto": "Listada como verificada no peneira.app, que confirmou o anúncio no Instagram e no Facebook do clube em 05/11/2026. Gratuita. Inscrição por formulário do Google indicado na página. A fonte não informa prazo nem telefone. Local no mapa aproximado (centro de Guaratinguetá).",
+      "fonte_texto": "Listada como verificada no peneira.app, que confirmou o anúncio no Instagram e no Facebook do clube em 05/11/2026. Gratuita. Inscrição por formulário do Google indicado na página. A fonte não informa prazo nem telefone. O clube chama a avaliação de Sub-17 (temporada 2027). Local no mapa aproximado (centro de Guaratinguetá).",
+      "telefone": null
+    },
+    {
+      "clube": "Guerreirinhas Grenás",
+      "divisao": "Avaliação feminina Sub-13, Sub-15 e Sub-17 (nascidas de 2010 a 2016)",
+      "cidade": "Mauá",
+      "endereco": "Rua Rosa Kasinski, 802, Mauá",
+      "lat": -23.667,
+      "lon": -46.461,
+      "data": "2026-11-14",
+      "hora": "12:00",
+      "horarios": null,
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "cat_min": 10,
+      "cat_max": 17,
+      "ano_min": 2010,
+      "ano_max": 2016,
+      "generos": [
+        "F"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": null,
+      "prazo": "2026-11-06",
+      "fonte_url": "https://peneira.app/peneiras",
+      "fonte_texto": "Listada como verificada no peneira.app (5 fontes consultadas): 14/11/2026, 12h, gratuita, feminino, nascidas de 2010 a 2016 (Sub-13, Sub-15 e Sub-17). ATENÇÃO: o formulário de inscrição dizia inscrições até 06/11/2026, prazo que já passou. Confirme com a organização antes de ir. Local no mapa aproximado.",
+      "telefone": null
+    },
+    {
+      "clube": "EC São Bento",
+      "divisao": "Avaliação masculina Sub-9 a Sub-20 (nascidos de 2006 a 2018)",
+      "cidade": "Sorocaba",
+      "endereco": "Sub-8 a Sub-14: Arena Galo, Rua José Raymundo de Andrade, 650, Éden. Sub-15 a Sub-20: CT Craque do Amanhã, Rua Padre Pedro Domingos Paes, 304, Vila Haro.",
+      "lat": -23.5015,
+      "lon": -47.4526,
+      "data": "2026-11-16",
+      "hora": "08:00",
+      "horarios": "8h. Sub-8 a Sub-14 na Arena Galo (Éden); Sub-15, Sub-17 e Sub-20 no CT Craque do Amanhã (Vila Haro).",
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "cat_min": 9,
+      "cat_max": 20,
+      "ano_min": 2006,
+      "ano_max": 2018,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": "RG original, atestado médico, autorização do responsável e uniforme de treino.",
+      "prazo": null,
+      "fonte_url": "https://peneira.app/peneiras",
+      "fonte_texto": "Anunciada nas redes oficiais do EC São Bento e listada no peneira.app (3 fontes consultadas): 16/11/2026, gratuita, masculino, nascidos de 2006 a 2018. Inscrição pela página oficial de inscrições do clube. O clube também aceita Sub-8 (nascidos em 2018), que o app mostra como Sub-9. Local no mapa aproximado (centro de Sorocaba).",
       "telefone": null
     },
     {
       "clube": "Athlético de Amparo",
       "divisao": "Avaliação masculina Sub-10 a Sub-15 (nascidos de 2011 a 2016)",
       "cidade": "Amparo",
-      "endereco": null,
+      "endereco": "Estádio José de Araújo Cintra (entrada pelo portão 01)",
       "lat": -22.7011,
       "lon": -46.7647,
       "data": "2026-12-18",
-      "hora": "08:00",
-      "horarios": "De 18 a 20/12/2026. Horário não divulgado; confirme antes de ir.",
+      "hora": "08:30",
+      "horarios": "De 18 a 20/12/2026, a partir das 8h30.",
       "preco": 0,
       "vagas": null,
       "total": null,
@@ -82,10 +111,10 @@
       "modalidades": [
         "Futebol"
       ],
-      "levar": null,
+      "levar": "Chuteira, caneleira, uniforme nas cores pedidas pelo clube, RG e atestado médico de até 6 meses.",
       "prazo": null,
       "fonte_url": "https://peneira.app/peneiras",
-      "fonte_texto": "Listada como verificada no peneira.app (4 fontes consultadas): 18 a 20/12/2026, gratuita, masculino, nascidos de 2004 a 2007 e de 2011 a 2016. No app entra só a base (2011 a 2016). A listagem não traz horário, endereço nem forma de inscrição: as 8h são só um marcador, confirme com o clube. Local no mapa aproximado (centro de Amparo).",
+      "fonte_texto": "Divulgada no Instagram oficial do Amparo Athlético Club e listada no peneira.app (4 fontes consultadas): 18 a 20/12/2026, 8h30, gratuita, masculino, nascidos de 2004 a 2007 e de 2011 a 2016. No app entra só a base (2011 a 2016). Local no mapa aproximado (centro de Amparo).",
       "telefone": null
     }
   ]
