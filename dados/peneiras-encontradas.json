@@ -234,6 +234,35 @@
       "fonte_texto": "Divulgada pelo CAY Futsal no Instagram (avaliações da base 2027), vista em 11/11/2026. Só para atletas federados em 2026. Inscrição obrigatória pelo formulário https://forms.gle/oRbXihRbkwzQ254F9; sem a ficha não entra no clube. O post não diz se é masculino ou feminino nem o preço. Local no mapa aproximado (bairro do Ipiranga, São Paulo)."
     },
     {
+      "clube": "Chute Inicial Corinthians Vila Ré",
+      "divisao": "Peneira na escolinha, nascidos de 2010 a 2022 (chance de bolsa integral)",
+      "cidade": "São Paulo",
+      "endereco": "Chute Inicial Corinthians Vila Ré (Vila Ré, zona leste)",
+      "lat": -23.535,
+      "lon": -46.505,
+      "data": "2026-11-28",
+      "hora": "08:00",
+      "horarios": "Nascidos de 2010 a 2013: 8h às 8h45. De 2014 a 2018: 8h50 às 9h35. De 2019 a 2022: 9h45 às 10h30. Goleiros também.",
+      "preco": null,
+      "vagas": null,
+      "total": null,
+      "cat_min": 9,
+      "cat_max": 16,
+      "ano_min": 2010,
+      "ano_max": 2022,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": null,
+      "prazo": null,
+      "telefone": null,
+      "fonte_url": "https://www.instagram.com/chuteinicialvilare/",
+      "fonte_texto": "Divulgada pela Chute Inicial Corinthians Vila Ré (escolinha licenciada) no Instagram em 03/11/2026. É peneira para a escolinha, com chance de bolsa integral, não para a base do Corinthians. Inscrição pelo WhatsApp do link na bio. O post não diz se é masculino ou feminino, o preço nem o endereço. Nascidos depois de 2017 aparecem no app como Sub-9. Local no mapa aproximado (Vila Ré, São Paulo)."
+    },
+    {
       "clube": "Athlético de Amparo",
       "divisao": "Avaliação masculina Sub-10 a Sub-15 (nascidos de 2011 a 2016)",
       "cidade": "Amparo",
