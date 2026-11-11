@@ -60,6 +60,35 @@
       "telefone": null
     },
     {
+      "clube": "Rio Claro FC",
+      "divisao": "Avaliação masculina Sub-9 a Sub-14 (nascidos de 2012 a 2019)",
+      "cidade": "Rio Claro",
+      "endereco": "Estádio Dr. Augusto Schmidt Filho (Schmitão), Rua Nove, 3910",
+      "lat": -22.4103,
+      "lon": -47.5604,
+      "data": "2026-11-15",
+      "hora": "07:30",
+      "horarios": "Chegada por ano de nascimento: 2017 a 2019 às 7h30; 2015 e 2016 às 8h; 2014 às 9h; 2013 às 10h; 2012 às 11h.",
+      "preco": 0,
+      "vagas": null,
+      "total": null,
+      "cat_min": 9,
+      "cat_max": 14,
+      "ano_min": 2012,
+      "ano_max": 2019,
+      "generos": [
+        "M"
+      ],
+      "modalidades": [
+        "Futebol"
+      ],
+      "levar": "RG original. Traje obrigatório: camiseta branca, shorts e meião pretos, chuteira e caneleira. Ingresso solidário: um alimento não perecível (o tipo é informado no link de inscrição).",
+      "prazo": null,
+      "fonte_url": "https://www.instagram.com/rioclarofco/",
+      "fonte_texto": "Divulgada pelo Rio Claro FC e pela @baseforte no Instagram (post 'Avaliação base do Rio Claro FC', visto em 11/11/2026). Avaliação para o Paulista 2027 e outras competições. Gratuita. Cadastro prévio obrigatório pelo link na bio de @_baseforte_. Nascidos em 2018 e 2019 (Sub-7/8) também podem ir; o app mostra a partir do Sub-9. Local no mapa aproximado (centro de Rio Claro).",
+      "telefone": null
+    },
+    {
       "clube": "EC São Bento",
       "divisao": "Avaliação masculina Sub-9 a Sub-20 (nascidos de 2006 a 2018)",
       "cidade": "Sorocaba",
